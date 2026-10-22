@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Contrôleur de gestion des étudiants (CRUD).
+ * Controller managing student records (CRUD operations).
  */
 @WebServlet("/admin/students")
 public class StudentServlet extends HttpServlet {

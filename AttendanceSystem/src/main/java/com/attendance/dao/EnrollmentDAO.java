@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data Access Object pour la table enrollment.
+ * Data Access Object for the enrollment table.
  */
 public class EnrollmentDAO {
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DTO agrégeant les statistiques globales pour les tableaux de bord.
+ * Data Transfer Object aggregating high-level metrics for dashboard views.
  */
 public class DashboardStatsDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -18,7 +18,7 @@ public class DashboardStatsDTO implements Serializable {
     private int totalAbsentRecords;
     private double overallAttendanceRate;
 
-    // Pour graphiques par matière
+    // Course-wise statistics for analytical charts
     private List<SubjectStat> subjectStats = new ArrayList<>();
 
     public static class SubjectStat implements Serializable {

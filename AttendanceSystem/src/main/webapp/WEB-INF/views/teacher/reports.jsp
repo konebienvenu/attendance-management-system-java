@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-    <jsp:param name="pageTitle" value="Rapports & Statistiques d'Assiduité" />
+    <jsp:param name="pageTitle" value="Attendance Analytics & Reports" />
 </jsp:include>
 
 <div class="d-flex min-vh-100">
@@ -11,17 +11,17 @@
 
     <div class="flex-grow-1 d-flex flex-column">
         <jsp:include page="/WEB-INF/views/common/navbar.jsp">
-            <jsp:param name="pageHeading" value="Rapports & Analyse d'Assiduité" />
+            <jsp:param name="pageHeading" value="Attendance Analytics & Reports" />
         </jsp:include>
 
         <main class="p-4 flex-grow-1">
-            <!-- Sélecteur de Matière -->
+            <!-- Course Selector -->
             <div class="card p-4 mb-4">
                 <form action="" method="get" class="row g-3 align-items-end">
                     <div class="col-12 col-md-8">
-                        <label class="form-label fw-semibold small text-secondary">Sélectionner la Matière à Analyser</label>
+                        <label class="form-label fw-semibold small text-secondary">Select Course to Analyze</label>
                         <select name="subjectId" class="form-select" required onchange="this.form.submit()">
-                            <option value="">-- Choisir un cours --</option>
+                            <option value="">-- Choose a Course --</option>
                             <c:forEach var="s" items="${subjects}">
                                 <option value="${s.subjectId}" ${s.subjectId == selectedSubject.subjectId ? 'selected' : ''}>
                                     [${s.subjectCode}] ${s.subjectName}
@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-12 col-md-4">
                         <button type="submit" class="btn btn-outline-primary w-100">
-                            <i class="fa-solid fa-chart-pie me-1"></i> Générer le Rapport
+                            <i class="fa-solid fa-chart-pie me-1"></i> Generate Report
                         </button>
                     </div>
                 </form>
@@ -43,7 +43,7 @@
                     <div class="row g-3 mb-4">
                         <div class="col-12 col-md-4">
                             <div class="card p-3 stat-card h-100" style="border-left-color: #4f46e5;">
-                                <div class="text-muted small fw-semibold text-uppercase">Module Analysé</div>
+                                <div class="text-muted small fw-semibold text-uppercase">Analyzed Course</div>
                                 <h5 class="fw-bold my-1 text-truncate">${selectedSubject.subjectName}</h5>
                                 <div class="small text-muted font-monospace">${selectedSubject.subjectCode}</div>
                             </div>
@@ -51,32 +51,32 @@
 
                         <div class="col-12 col-md-4">
                             <div class="card p-3 stat-card h-100" style="border-left-color: #10b981;">
-                                <div class="text-muted small fw-semibold text-uppercase">Taux Moyen d'Assiduité</div>
+                                <div class="text-muted small fw-semibold text-uppercase">Average Attendance Rate</div>
                                 <h3 class="fw-bold my-1 text-success">${avgPercentage}%</h3>
-                                <div class="small text-muted">Sur l'ensemble des étudiants</div>
+                                <div class="small text-muted">Across all enrolled students</div>
                             </div>
                         </div>
 
                         <div class="col-12 col-md-4">
                             <div class="card p-3 stat-card h-100" style="border-left-color: #ef4444;">
-                                <div class="text-muted small fw-semibold text-uppercase">Alerte Règle des 75%</div>
+                                <div class="text-muted small fw-semibold text-uppercase">Academic 75% Rule Alert</div>
                                 <h3 class="fw-bold my-1 text-danger">${warningCount}</h3>
                                 <div class="small text-danger">
-                                    <i class="fa-solid fa-triangle-exclamation me-1"></i>Étudiants sous le seuil minimal
+                                    <i class="fa-solid fa-triangle-exclamation me-1"></i>Students below mandatory threshold
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tableau du rapport -->
+                    <!-- Report Table -->
                     <div class="card p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <div>
-                                <h5 class="fw-bold text-dark mb-1">Détail Individuel par Étudiant</h5>
-                                <p class="text-muted small mb-0">Le seuil universitaire d'admissibilité aux examens est fixé à <strong>75%</strong>.</p>
+                                <h5 class="fw-bold text-dark mb-1">Student Attendance Breakdown</h5>
+                                <p class="text-muted small mb-0">The university exam eligibility threshold is established at <strong>75%</strong>.</p>
                             </div>
                             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
-                                <i class="fa-solid fa-print me-1"></i> Imprimer / Exporter PDF
+                                <i class="fa-solid fa-print me-1"></i> Print / Export PDF
                             </button>
                         </div>
 
@@ -84,13 +84,13 @@
                             <table class="table table-modern table-hover align-middle">
                                 <thead>
                                     <tr>
-                                        <th>N° Enrôlement</th>
-                                        <th>Nom de l'Étudiant</th>
-                                        <th>Email</th>
-                                        <th class="text-center">Séances Totales</th>
-                                        <th class="text-center">Présences</th>
-                                        <th style="min-width: 200px;">Assiduité (%)</th>
-                                        <th class="text-end">Statut Universitaire</th>
+                                        <th>Enrollment No</th>
+                                        <th>Student Name</th>
+                                        <th>University Email</th>
+                                        <th class="text-center">Total Sessions</th>
+                                        <th class="text-center">Attended</th>
+                                        <th style="min-width: 200px;">Attendance Ratio (%)</th>
+                                        <th class="text-end">Academic Standing</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -125,12 +125,12 @@
                                                 <c:choose>
                                                     <c:when test="${r.warning}">
                                                         <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">
-                                                            <i class="fa-solid fa-triangle-exclamation me-1"></i> Risque (< 75%)
+                                                            <i class="fa-solid fa-triangle-exclamation me-1"></i> At Risk (&lt; 75%)
                                                         </span>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">
-                                                            <i class="fa-solid fa-check me-1"></i> Admissible (>= 75%)
+                                                            <i class="fa-solid fa-check me-1"></i> Eligible (&ge; 75%)
                                                         </span>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -145,8 +145,8 @@
                 <c:otherwise>
                     <div class="card p-5 text-center text-muted">
                         <i class="fa-solid fa-file-chart-column fs-1 mb-3 text-secondary"></i>
-                        <h5>Sélectionnez une matière pour afficher les rapports d'assiduité</h5>
-                        <p class="small mb-0">Les données de présence consolidées et les avertissements pour les étudiants en difficulté seront calculés automatiquement.</p>
+                        <h5>Select a course module to display attendance analytics</h5>
+                        <p class="small mb-0">Consolidated attendance metrics and academic warning indicators will calculate automatically.</p>
                     </div>
                 </c:otherwise>
             </c:choose>

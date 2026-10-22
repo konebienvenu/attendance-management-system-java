@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Contrôleur du tableau de bord Enseignant.
+ * Controller for the Faculty Portal Dashboard.
  */
 @WebServlet("/teacher/dashboard")
 public class TeacherDashboardServlet extends HttpServlet {
@@ -37,7 +37,6 @@ public class TeacherDashboardServlet extends HttpServlet {
         User user = (User) session.getAttribute("currentUser");
         Teacher teacher = (Teacher) session.getAttribute("currentTeacher");
 
-        // Si la session n'avait pas encore stocké le Teacher
         if (teacher == null && user != null) {
             teacher = teacherDAO.getTeacherByUserId(user.getUserId());
             session.setAttribute("currentTeacher", teacher);

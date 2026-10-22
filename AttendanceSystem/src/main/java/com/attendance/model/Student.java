@@ -3,7 +3,7 @@ package com.attendance.model;
 import java.io.Serializable;
 
 /**
- * Entité représentant un étudiant.
+ * Entity representing a student.
  */
 public class Student implements Serializable {
     private static final long serialVersionUID = 1L;

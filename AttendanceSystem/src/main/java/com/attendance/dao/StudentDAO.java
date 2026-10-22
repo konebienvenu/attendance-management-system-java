@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data Access Object pour la table student.
- * Fournit les opérations CRUD complètes avec gestion des exceptions.
+ * Data Access Object for the student table.
+ * Provides complete CRUD operations with robust exception handling.
  */
 public class StudentDAO {
 

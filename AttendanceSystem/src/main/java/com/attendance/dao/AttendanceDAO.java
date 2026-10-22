@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Data Access Object pour la table attendance.
- * Gère les feuilles de présence, les transactions par lot et les rapports statistiques.
+ * Data Access Object for the attendance table.
+ * Handles attendance roll call sheets, atomic batch transactions, and statistical reports.
  */
 public class AttendanceDAO {
 
     /**
-     * Récupère la liste des étudiants inscrits à une matière ainsi que leur présence pour une date donnée.
+     * Retrieves enrolled students and their attendance status for a given course and date.
      */
     public List<AttendanceSheetRowDTO> getAttendanceSheet(int subjectId, Date date) {
         List<AttendanceSheetRowDTO> list = new ArrayList<>();
@@ -50,7 +50,7 @@ public class AttendanceDAO {
                     rs.getString("enrollment_no"),
                     rs.getString("student_name"),
                     rs.getString("email"),
-                    rs.getString("status") // 'PRESENT', 'ABSENT', ou null
+                    rs.getString("status") // 'PRESENT', 'ABSENT', or null
                 ));
             }
         } catch (SQLException e) {
@@ -62,8 +62,8 @@ public class AttendanceDAO {
     }
 
     /**
-     * Enregistre ou met à jour les présences d'une classe de manière transactionnelle atomique.
-     * Utilise ON DUPLICATE KEY UPDATE pour gérer automatiquement les révisions de présence.
+     * Saves class attendance using an atomic JDBC transaction.
+     * Uses ON DUPLICATE KEY UPDATE to allow revisions without creating duplicates.
      */
     public boolean saveBatchAttendance(int teacherId, Date date, Map<Integer, String> enrollmentStatusMap) {
         if (enrollmentStatusMap == null || enrollmentStatusMap.isEmpty()) {
@@ -79,7 +79,7 @@ public class AttendanceDAO {
 
         try {
             conn = DBConnection.getConnection();
-            conn.setAutoCommit(false); // Démarrage transactionnelle JDBC
+            conn.setAutoCommit(false); // Begin ACID transaction
 
             stmt = conn.prepareStatement(sql);
 
@@ -95,13 +95,13 @@ public class AttendanceDAO {
             }
 
             stmt.executeBatch();
-            conn.commit(); // Validation complète
+            conn.commit(); // Atomic commit
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             if (conn != null) {
                 try {
-                    conn.rollback(); // Annulation en cas d'erreur
+                    conn.rollback(); // Rollback on failure
                 } catch (SQLException ignored) {
                 }
             }
@@ -112,8 +112,8 @@ public class AttendanceDAO {
     }
 
     /**
-     * Génère un rapport de présence consolidé pour une matière donnée.
-     * Calcule le total de cours dispensés, le nombre de présences et le pourcentage.
+     * Generates a consolidated attendance report for a course module.
+     * Computes total classes conducted, attended classes, and percentage.
      */
     public List<StudentReportDTO> getStudentReportsBySubject(int subjectId) {
         List<StudentReportDTO> list = new ArrayList<>();
@@ -158,7 +158,7 @@ public class AttendanceDAO {
     }
 
     /**
-     * Récupère les métriques globales pour le tableau de bord Administrateur et Enseignant.
+     * Retrieves overall system metrics for the Administrator and Faculty dashboards.
      */
     public DashboardStatsDTO getDashboardStats() {
         DashboardStatsDTO stats = new DashboardStatsDTO();
@@ -170,7 +170,7 @@ public class AttendanceDAO {
             conn = DBConnection.getConnection();
             stmt = conn.createStatement();
 
-            // Totaux étudiants, profs, matières, inscriptions
+            // Total students, faculty, courses, enrollments, and attendance marks
             rs = stmt.executeQuery("SELECT (SELECT COUNT(*) FROM student) AS total_students, " +
                                   "(SELECT COUNT(*) FROM teacher) AS total_teachers, " +
                                   "(SELECT COUNT(*) FROM subject) AS total_subjects, " +
@@ -188,7 +188,7 @@ public class AttendanceDAO {
             }
             rs.close();
 
-            // Stats par matière pour le graphique
+            // Stats per subject for the analytical chart
             String subjectSql = "SELECT sub.subject_name, " +
                                 "SUM(CASE WHEN a.status = 'PRESENT' THEN 1 ELSE 0 END) AS present_count, " +
                                 "SUM(CASE WHEN a.status = 'ABSENT' THEN 1 ELSE 0 END) AS absent_count " +

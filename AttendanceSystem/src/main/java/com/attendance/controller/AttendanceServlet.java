@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Contrôleur de saisie interactive des présences.
+ * Controller for interactive class attendance roll call.
  */
 @WebServlet("/teacher/attendance")
 public class AttendanceServlet extends HttpServlet {
@@ -51,7 +51,7 @@ public class AttendanceServlet extends HttpServlet {
             session.setAttribute("currentTeacher", teacher);
         }
 
-        // Liste des matières accessibles
+        // Accessible courses
         List<Subject> subjects;
         if (user != null && user.isAdmin()) {
             subjects = subjectDAO.getAllSubjects();
@@ -62,7 +62,7 @@ public class AttendanceServlet extends HttpServlet {
         }
         req.setAttribute("subjects", subjects);
 
-        // Date sélectionnée (par défaut aujourd'hui)
+        // Selected date (defaults to current date)
         String dateParam = req.getParameter("date");
         Date attendanceDate;
         if (dateParam != null && !dateParam.trim().isEmpty()) {
@@ -76,7 +76,7 @@ public class AttendanceServlet extends HttpServlet {
         }
         req.setAttribute("selectedDate", attendanceDate.toString());
 
-        // Matière sélectionnée
+        // Selected course module
         String subjectIdParam = req.getParameter("subjectId");
         if (subjectIdParam != null && !subjectIdParam.trim().isEmpty()) {
             try {
@@ -85,7 +85,7 @@ public class AttendanceServlet extends HttpServlet {
                 Subject selectedSubject = subjectDAO.getSubjectById(subjectId);
                 req.setAttribute("selectedSubject", selectedSubject);
 
-                // Récupération de la feuille de présence (étudiants + statut actuel)
+                // Fetch roll call sheet (enrolled students + recorded statuses)
                 List<AttendanceSheetRowDTO> sheet = attendanceDAO.getAttendanceSheet(subjectId, attendanceDate);
                 req.setAttribute("attendanceSheet", sheet);
             } catch (NumberFormatException ignored) {
@@ -110,8 +110,7 @@ public class AttendanceServlet extends HttpServlet {
         String dateParam = req.getParameter("attendanceDate");
         Date attendanceDate = Date.valueOf(dateParam);
 
-        // Lecture des statuts de présence envoyés pour chaque inscription
-        // Les champs de formulaire sont nommés : status_{enrollmentId}
+        // Read attendance status per student enrollment: status_{enrollmentId}
         Map<Integer, String> statusMap = new HashMap<>();
         Enumeration<String> paramNames = req.getParameterNames();
 

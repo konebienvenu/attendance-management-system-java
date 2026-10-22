@@ -3,8 +3,8 @@ package com.attendance.model;
 import java.io.Serializable;
 
 /**
- * DTO pour les rapports de présence par étudiant et par matière.
- * Calcule le pourcentage et le statut (Alerte si < 75%).
+ * Data Transfer Object for attendance reports per student.
+ * Computes attendance percentage and flags academic 75% rule warnings.
  */
 public class StudentReportDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -97,7 +97,7 @@ public class StudentReportDTO implements Serializable {
     }
 
     /**
-     * Règle académique standard : alerte si présence < 75%
+     * Institutional policy: Flag warning if student attendance falls below 75%
      */
     public boolean isWarning() {
         return totalClasses > 0 && percentage < 75.0;

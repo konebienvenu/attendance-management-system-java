@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Contrôleur de gestion des enseignants (CRUD et création de comptes).
+ * Controller managing faculty records and user account generation.
  */
 @WebServlet("/admin/teachers")
 public class TeacherServlet extends HttpServlet {

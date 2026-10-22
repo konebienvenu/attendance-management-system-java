@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data Access Object pour la table subject.
+ * Data Access Object for the subject table.
  */
 public class SubjectDAO {
 

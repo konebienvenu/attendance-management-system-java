@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Contrôleur des rapports et statistiques de présence.
+ * Controller for attendance reports and 75% rule academic analytics.
  */
 @WebServlet(urlPatterns = {"/teacher/reports", "/admin/reports"})
 public class ReportServlet extends HttpServlet {
@@ -66,7 +66,7 @@ public class ReportServlet extends HttpServlet {
                 List<StudentReportDTO> reports = attendanceDAO.getStudentReportsBySubject(subjectId);
                 req.setAttribute("reports", reports);
 
-                // Statistiques résumées pour cette matière
+                // Consolidated statistics for this course
                 long warningCount = reports.stream().filter(StudentReportDTO::isWarning).count();
                 double avgPercentage = reports.stream()
                         .mapToDouble(StudentReportDTO::getPercentage)

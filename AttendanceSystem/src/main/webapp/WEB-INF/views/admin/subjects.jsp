@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-    <jsp:param name="pageTitle" value="Gestion des Matières" />
+    <jsp:param name="pageTitle" value="Course & Subject Management" />
 </jsp:include>
 
 <div class="d-flex min-vh-100">
@@ -11,31 +11,31 @@
 
     <div class="flex-grow-1 d-flex flex-column">
         <jsp:include page="/WEB-INF/views/common/navbar.jsp">
-            <jsp:param name="pageHeading" value="Gestion des Matières" />
+            <jsp:param name="pageHeading" value="Course & Subject Management" />
         </jsp:include>
 
         <main class="p-4 flex-grow-1">
             <c:if test="${param.msg == 'added'}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fa-solid fa-circle-check me-2"></i>Matière ajoutée avec succès !
+                    <i class="fa-solid fa-circle-check me-2"></i>Course registered successfully!
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             </c:if>
             <c:if test="${param.msg == 'updated'}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="fa-solid fa-circle-check me-2"></i>Matière mise à jour !
+                    <i class="fa-solid fa-circle-check me-2"></i>Course details updated successfully!
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             </c:if>
             <c:if test="${param.msg == 'deleted'}">
                 <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa-solid fa-trash me-2"></i>Matière supprimée.
+                    <i class="fa-solid fa-trash me-2"></i>Course removed from curriculum.
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             </c:if>
             <c:if test="${param.error == 'duplicate_code'}">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="fa-solid fa-triangle-exclamation me-2"></i>Erreur : Ce code matière existe déjà.
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>Error: A course with this code already exists.
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             </c:if>
@@ -43,16 +43,16 @@
             <div class="card p-4">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                     <div>
-                        <h5 class="fw-bold text-dark mb-1">Catalogue des Matières</h5>
-                        <p class="text-muted small mb-0">Total : ${subjects.size()} matières configurées</p>
+                        <h5 class="fw-bold text-dark mb-1">Course Curriculum Catalog</h5>
+                        <p class="text-muted small mb-0">Total: ${subjects.size()} configured academic courses</p>
                     </div>
                     <div class="d-flex gap-2">
                         <div class="input-group" style="max-width: 280px;">
                             <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-magnifying-glass"></i></span>
-                            <input type="text" class="form-control border-start-0 table-search-input" data-table="subjectsTable" placeholder="Rechercher...">
+                            <input type="text" class="form-control border-start-0 table-search-input" data-table="subjectsTable" placeholder="Search courses...">
                         </div>
                         <button type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#addSubjectModal">
-                            <i class="fa-solid fa-plus me-1"></i> Nouvelle Matière
+                            <i class="fa-solid fa-plus me-1"></i> Add Course
                         </button>
                     </div>
                 </div>
@@ -62,9 +62,9 @@
                         <thead>
                             <tr>
                                 <th># ID</th>
-                                <th>Code Matière</th>
-                                <th>Nom du Module</th>
-                                <th>Enseignant Responsable</th>
+                                <th>Course Code</th>
+                                <th>Course Title</th>
+                                <th>Assigned Faculty</th>
                                 <th class="text-end">Actions</th>
                             </tr>
                         </thead>
@@ -76,7 +76,7 @@
                                     <td class="fw-semibold text-dark">${sub.subjectName}</td>
                                     <td>
                                         <i class="fa-solid fa-user-tie text-muted me-1"></i>
-                                        ${sub.teacherName != null ? sub.teacherName : "Non assigné"}
+                                        ${sub.teacherName != null ? sub.teacherName : "Unassigned"}
                                     </td>
                                     <td class="text-end">
                                         <button class="btn btn-sm btn-outline-primary me-1" 
@@ -84,7 +84,7 @@
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
                                         <form action="${pageContext.request.contextPath}/admin/subjects" method="post" class="d-inline"
-                                              onsubmit="return confirm('Confirmez-vous la suppression de cette matière ?');">
+                                              onsubmit="return confirm('Are you sure you want to delete this course?');">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="${sub.subjectId}">
                                             <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -94,7 +94,7 @@
                                     </td>
                                 </tr>
 
-                                <!-- Modal Modification Matière -->
+                                <!-- Edit Subject Modal -->
                                 <div class="modal fade" id="editSubjectModal${sub.subjectId}" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -102,20 +102,20 @@
                                                 <input type="hidden" name="action" value="update">
                                                 <input type="hidden" name="subjectId" value="${sub.subjectId}">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title fw-bold">Modifier la Matière</h5>
+                                                    <h5 class="modal-title fw-bold">Edit Course Details</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Code Matière</label>
+                                                        <label class="form-label fw-semibold small">Course Code</label>
                                                         <input type="text" name="subjectCode" class="form-control" value="${sub.subjectCode}" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Nom de la Matière</label>
+                                                        <label class="form-label fw-semibold small">Course Title</label>
                                                         <input type="text" name="subjectName" class="form-control" value="${sub.subjectName}" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Enseignant Responsable</label>
+                                                        <label class="form-label fw-semibold small">Assigned Faculty Member</label>
                                                         <select name="teacherId" class="form-select" required>
                                                             <c:forEach var="t" items="${teachers}">
                                                                 <option value="${t.teacherId}" ${t.teacherId == sub.teacherId ? 'selected' : ''}>
@@ -126,8 +126,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Annuler</button>
-                                                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -142,29 +142,29 @@
     </div>
 </div>
 
-<!-- Modal Ajout Matière -->
+<!-- Add Subject Modal -->
 <div class="modal fade" id="addSubjectModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form action="${pageContext.request.contextPath}/admin/subjects" method="post">
                 <input type="hidden" name="action" value="add">
                 <div class="modal-header">
-                    <h5 class="modal-title fw-bold">Ajouter une Matière</h5>
+                    <h5 class="modal-title fw-bold">Register New Course</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">Code Matière</label>
-                        <input type="text" name="subjectCode" class="form-control" placeholder="Ex: 01CE0308" required>
+                        <label class="form-label fw-semibold small">Course Code</label>
+                        <input type="text" name="subjectCode" class="form-control" placeholder="e.g. 01CE0308" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">Nom du Module</label>
-                        <input type="text" name="subjectName" class="form-control" placeholder="Ex: Advanced Java Technologies (AJT)" required>
+                        <label class="form-label fw-semibold small">Course Title</label>
+                        <input type="text" name="subjectName" class="form-control" placeholder="e.g. Advanced Java Technologies (AJT)" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">Enseignant Responsable</label>
+                        <label class="form-label fw-semibold small">Assigned Faculty Member</label>
                         <select name="teacherId" class="form-select" required>
-                            <option value="">Sélectionner un enseignant...</option>
+                            <option value="">Select an instructor...</option>
                             <c:forEach var="t" items="${teachers}">
                                 <option value="${t.teacherId}">${t.teacherName}</option>
                             </c:forEach>
@@ -172,8 +172,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Créer la matière</button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Course</button>
                 </div>
             </form>
         </div>

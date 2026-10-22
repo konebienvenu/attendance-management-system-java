@@ -1,13 +1,13 @@
 -- ====================================================================
 -- AJT PROJECT (01CE0308) - DATABASE SCHEMA
--- ATTENDANCE MANAGEMENT SYSTEM
+-- ENTERPRISE ATTENDANCE MANAGEMENT SYSTEM
 -- ====================================================================
 
 DROP DATABASE IF EXISTS attendance_management_system;
 CREATE DATABASE attendance_management_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE attendance_management_system;
 
--- 1. Table system_user : Authentification et rôles
+-- 1. Table system_user: Authentication and role-based access
 CREATE TABLE system_user (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -15,7 +15,7 @@ CREATE TABLE system_user (
     role ENUM('ADMIN', 'TEACHER') NOT NULL
 ) ENGINE=InnoDB;
 
--- 2. Table student : Informations sur les étudiants
+-- 2. Table student: Student directory and enrollment records
 CREATE TABLE student (
     student_id INT PRIMARY KEY AUTO_INCREMENT,
     enrollment_no VARCHAR(20) NOT NULL UNIQUE,
@@ -24,7 +24,7 @@ CREATE TABLE student (
     semester INT NOT NULL
 ) ENGINE=InnoDB;
 
--- 3. Table teacher : Informations sur les enseignants (reliée au compte utilisateur)
+-- 3. Table teacher: Faculty information mapped to user account
 CREATE TABLE teacher (
     teacher_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL UNIQUE,
@@ -33,7 +33,7 @@ CREATE TABLE teacher (
     FOREIGN KEY (user_id) REFERENCES system_user(user_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- 4. Table subject : Matières enseignées
+-- 4. Table subject: Academic courses mapped to assigned faculty
 CREATE TABLE subject (
     subject_id INT PRIMARY KEY AUTO_INCREMENT,
     subject_code VARCHAR(20) NOT NULL UNIQUE,
@@ -42,7 +42,7 @@ CREATE TABLE subject (
     FOREIGN KEY (teacher_id) REFERENCES teacher(teacher_id) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
--- 5. Table enrollment : Association étudiants <-> matières (Relation N:M)
+-- 5. Table enrollment: Connects students with subjects (Many-to-Many Relationship)
 CREATE TABLE enrollment (
     enrollment_id INT PRIMARY KEY AUTO_INCREMENT,
     student_id INT NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE enrollment (
     FOREIGN KEY (subject_id) REFERENCES subject(subject_id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- 6. Table attendance : Enregistrement quotidien des présences
+-- 6. Table attendance: Daily attendance logs per enrollment
 CREATE TABLE attendance (
     attendance_id INT PRIMARY KEY AUTO_INCREMENT,
     enrollment_id INT NOT NULL,

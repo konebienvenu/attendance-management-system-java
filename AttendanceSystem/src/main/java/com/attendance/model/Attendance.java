@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 /**
- * Entité représentant une présence enregistrée.
+ * Entity representing an individual student attendance record.
  */
 public class Attendance implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -15,7 +15,7 @@ public class Attendance implements Serializable {
     private String status; // 'PRESENT', 'ABSENT'
     private int markedBy;
 
-    // Attributs pour l'affichage
+    // Joined attributes for display convenience
     private String studentName;
     private String enrollmentNo;
     private String subjectName;

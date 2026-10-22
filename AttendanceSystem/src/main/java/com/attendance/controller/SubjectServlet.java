@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Contrôleur de gestion des matières et assignation aux enseignants.
+ * Controller managing academic courses and faculty assignments.
  */
 @WebServlet("/admin/subjects")
 public class SubjectServlet extends HttpServlet {

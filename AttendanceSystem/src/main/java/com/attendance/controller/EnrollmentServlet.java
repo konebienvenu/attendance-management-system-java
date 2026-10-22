@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Contrôleur d'inscription des étudiants aux matières (relation N:M).
+ * Controller managing student course enrollments (Many-to-Many association).
  */
 @WebServlet("/admin/enrollments")
 public class EnrollmentServlet extends HttpServlet {

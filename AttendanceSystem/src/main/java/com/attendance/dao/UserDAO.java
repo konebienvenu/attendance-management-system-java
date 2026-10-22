@@ -11,12 +11,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Data Access Object pour la table system_user.
+ * Data Access Object for the system_user table.
  */
 public class UserDAO {
 
     /**
-     * Authentifie un utilisateur par son nom d'utilisateur et son mot de passe.
+     * Authenticates a user by username and password.
      */
     public User authenticate(String username, String plainPassword) {
         String sql = "SELECT user_id, username, password, role FROM system_user WHERE username = ?";
@@ -50,7 +50,7 @@ public class UserDAO {
     }
 
     /**
-     * Récupère un utilisateur par son identifiant.
+     * Retrieves a user by ID.
      */
     public User getUserById(int userId) {
         String sql = "SELECT user_id, username, password, role FROM system_user WHERE user_id = ?";
@@ -81,8 +81,8 @@ public class UserDAO {
     }
 
     /**
-     * Crée un utilisateur avec mot de passe haché.
-     * @return ID généré ou -1 en cas d'erreur
+     * Creates a new user with a hashed password.
+     * @return generated user ID or -1 on failure
      */
     public int createUser(String username, String plainPassword, String role) {
         String sql = "INSERT INTO system_user (username, password, role) VALUES (?, ?, ?)";
@@ -113,7 +113,7 @@ public class UserDAO {
     }
 
     /**
-     * Supprime un utilisateur par ID.
+     * Deletes a user by ID.
      */
     public boolean deleteUser(int userId) {
         String sql = "DELETE FROM system_user WHERE user_id = ?";

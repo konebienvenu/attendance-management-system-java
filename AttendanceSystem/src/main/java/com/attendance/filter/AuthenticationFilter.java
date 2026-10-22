@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Filtre de sécurité Servlet vérifiant l'authentification et les autorisations par rôle.
+ * Servlet security filter handling authentication and Role-Based Access Control (RBAC).
  */
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {
@@ -31,14 +31,13 @@ public class AuthenticationFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 
-        // Force l'encodage UTF-8 pour tous les échanges
         req.setCharacterEncoding("UTF-8");
         res.setCharacterEncoding("UTF-8");
 
         String contextPath = req.getContextPath();
         String uri = req.getRequestURI().substring(contextPath.length());
 
-        // Fichiers statiques et routes publiques
+        // Static assets and public entry points
         boolean isStatic = uri.startsWith("/assets/") || uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png") || uri.endsWith(".jpg");
         boolean isPublic = uri.equals("/login") || uri.equals("/") || uri.equals("/logout") || uri.equals("/index.jsp");
 
@@ -47,7 +46,7 @@ public class AuthenticationFilter implements Filter {
             return;
         }
 
-        // Vérification de la session active
+        // Validate session
         HttpSession session = req.getSession(false);
         User user = (session != null) ? (User) session.getAttribute("currentUser") : null;
 
@@ -56,14 +55,14 @@ public class AuthenticationFilter implements Filter {
             return;
         }
 
-        // Contrôle d'accès basé sur les rôles (RBAC)
+        // Role-Based Access Control (RBAC)
         if (uri.startsWith("/admin") && !user.isAdmin()) {
-            res.sendError(HttpServletResponse.SC_FORBIDDEN, "Accès réservé aux administrateurs");
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Restricted: Administrator privileges required.");
             return;
         }
 
         if (uri.startsWith("/teacher") && !user.isTeacher() && !user.isAdmin()) {
-            res.sendError(HttpServletResponse.SC_FORBIDDEN, "Accès réservé aux enseignants");
+            res.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Restricted: Faculty credentials required.");
             return;
         }
 

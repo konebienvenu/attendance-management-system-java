@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 /**
- * Entité représentant l'inscription d'un étudiant à une matière.
+ * Entity representing student enrollment in a course module.
  */
 public class Enrollment implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -15,7 +15,7 @@ public class Enrollment implements Serializable {
     private Date enrollmentDate;
     private String status; // 'ACTIVE', 'INACTIVE'
 
-    // Attributs pratiques pour l'affichage sans requêtes supplémentaires
+    // Joined attributes for display convenience
     private String studentName;
     private String enrollmentNo;
     private String subjectCode;

@@ -3,7 +3,7 @@ package com.attendance.model;
 import java.io.Serializable;
 
 /**
- * Entité représentant une matière.
+ * Entity representing an academic subject or course.
  */
 public class Subject implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -13,7 +13,7 @@ public class Subject implements Serializable {
     private String subjectName;
     private int teacherId;
 
-    // Attribut de jointure pour afficher le nom du professeur assigné
+    // Joined attribute for displaying assigned faculty name
     private String teacherName;
 
     public Subject() {

@@ -13,27 +13,27 @@ import java.util.List;
 
 public class DBTest {
     public static void main(String[] args) {
-        System.out.println("=== TEST DE CONNEXION ET DAOs ===");
+        System.out.println("=== DATABASE & DAO CONNECTIVITY TEST ===");
         try (Connection conn = DBConnection.getConnection()) {
-            System.out.println("1. Connexion MySQL réussie : " + !conn.isClosed());
+            System.out.println("1. MySQL Connection: " + (!conn.isClosed() ? "SUCCESS" : "FAILED"));
 
             // Test UserDAO
             UserDAO userDAO = new UserDAO();
             User admin = userDAO.authenticate("admin", "admin123");
-            System.out.println("2. Authentification Admin : " + (admin != null ? "SUCCÈS (" + admin.getUsername() + ")" : "ÉCHEC"));
+            System.out.println("2. Admin Authentication: " + (admin != null ? "SUCCESS (" + admin.getUsername() + ")" : "FAILED"));
 
             // Test StudentDAO
             StudentDAO studentDAO = new StudentDAO();
             List<Student> students = studentDAO.getAllStudents();
-            System.out.println("3. Étudiants chargés : " + students.size() + " étudiants trouvés.");
+            System.out.println("3. Student Directory: " + students.size() + " students retrieved.");
 
             // Test AttendanceDAO
             AttendanceDAO attendanceDAO = new AttendanceDAO();
             DashboardStatsDTO stats = attendanceDAO.getDashboardStats();
-            System.out.println("4. Statistiques globales : " + stats.getTotalStudents() + " étudiants, " 
-                    + stats.getTotalSubjects() + " matières, Assiduité: " + stats.getOverallAttendanceRate() + "%");
+            System.out.println("4. System Metrics: " + stats.getTotalStudents() + " students, " 
+                    + stats.getTotalSubjects() + " courses, Attendance Rate: " + stats.getOverallAttendanceRate() + "%");
 
-            System.out.println("=== TOUS LES TESTS SONT AU VERT ! ===");
+            System.out.println("=== ALL CHECKS PASSED SUCCESSFULLY ===");
         } catch (Exception e) {
             e.printStackTrace();
         }

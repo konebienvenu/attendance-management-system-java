@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Data Access Object pour la table teacher.
+ * Data Access Object for the teacher table.
  */
 public class TeacherDAO {
 
@@ -117,7 +117,7 @@ public class TeacherDAO {
     }
 
     /**
-     * Crée à la fois le compte utilisateur et la fiche enseignant dans une seule transaction atomique.
+     * Atomically creates both the system user account and the faculty record in a single transaction.
      */
     public boolean addTeacherWithAccount(String teacherName, String email, String username, String password) {
         String insertUserSql = "INSERT INTO system_user (username, password, role) VALUES (?, ?, 'TEACHER')";
@@ -129,7 +129,7 @@ public class TeacherDAO {
 
         try {
             conn = DBConnection.getConnection();
-            conn.setAutoCommit(false); // Démarrage transaction
+            conn.setAutoCommit(false); // Begin transaction
 
             userStmt = conn.prepareStatement(insertUserSql, Statement.RETURN_GENERATED_KEYS);
             userStmt.setString(1, username);
@@ -149,7 +149,7 @@ public class TeacherDAO {
             teacherStmt.setString(3, email);
             teacherStmt.executeUpdate();
 
-            conn.commit(); // Validation
+            conn.commit(); // Commit transaction
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -183,7 +183,6 @@ public class TeacherDAO {
     }
 
     public boolean deleteTeacher(int teacherId) {
-        // En supprimant le compte system_user associé, la clé étrangère ON DELETE CASCADE supprime aussi teacher
         Teacher t = getTeacherById(teacherId);
         if (t == null) return false;
 

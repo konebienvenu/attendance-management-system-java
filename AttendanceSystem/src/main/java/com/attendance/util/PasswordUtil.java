@@ -5,12 +5,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Utilitaire pour le hachage sécurisé des mots de passe avec l'algorithme SHA-256.
+ * Utility class for secure password hashing using SHA-256 algorithm.
  */
 public class PasswordUtil {
 
     /**
-     * Hache un mot de passe en clair avec SHA-256 et retourne une chaîne hexadécimale.
+     * Hashes a plaintext password using SHA-256 and returns a hex string.
      */
     public static String hashPassword(String password) {
         if (password == null) return null;
@@ -25,24 +25,22 @@ public class PasswordUtil {
             }
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Erreur de hachage SHA-256", e);
+            throw new RuntimeException("Error computing SHA-256 password hash", e);
         }
     }
 
     /**
-     * Vérifie la concordance entre un mot de passe en clair et un mot de passe haché.
-     * Prend aussi en charge le mot de passe en clair pour faciliter les tests initiaux.
+     * Verifies if a plaintext password matches the stored hashed password.
+     * Also supports plaintext comparison fallback for testing convenience.
      */
     public static boolean verifyPassword(String plainPassword, String storedPassword) {
         if (plainPassword == null || storedPassword == null) {
             return false;
         }
-        // Comparaison avec hash SHA-256
         String hashedInput = hashPassword(plainPassword);
         if (hashedInput.equalsIgnoreCase(storedPassword)) {
             return true;
         }
-        // Repli : comparaison en clair si la base contient un mot de passe non haché
         return plainPassword.equals(storedPassword);
     }
 }

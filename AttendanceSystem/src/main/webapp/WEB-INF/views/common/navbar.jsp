@@ -4,9 +4,9 @@
     <div class="d-flex align-items-center gap-3">
         <h5 class="mb-0 fw-bold text-dark">
             <i class="fa-solid fa-graduation-cap text-primary me-2"></i>
-            ${param.pageHeading != null ? param.pageHeading : "Tableau de Bord"}
+            ${param.pageHeading != null ? param.pageHeading : "Dashboard"}
         </h5>
-        <span class="badge bg-light text-muted border px-2 py-1">AJT Semestre 3</span>
+        <span class="badge bg-light text-muted border px-2 py-1">AJT Semester 3</span>
     </div>
 
     <div class="d-flex align-items-center gap-3">
@@ -32,18 +32,18 @@
                 </div>
                 <div class="small">
                     <c:if test="${sessionScope.currentUser.admin}">
-                        <span class="badge badge-role badge-admin">ADMINISTRATEUR</span>
+                        <span class="badge badge-role badge-admin">ADMINISTRATOR</span>
                     </c:if>
                     <c:if test="${sessionScope.currentUser.teacher}">
-                        <span class="badge badge-role badge-teacher">ENSEIGNANT</span>
+                        <span class="badge badge-role badge-teacher">FACULTY</span>
                     </c:if>
                 </div>
             </div>
         </div>
 
-        <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-danger btn-sm px-3 rounded-pill" title="Se déconnecter">
+        <a href="${pageContext.request.contextPath}/logout" class="btn btn-outline-danger btn-sm px-3 rounded-pill" title="Sign Out">
             <i class="fa-solid fa-arrow-right-from-bracket me-1"></i>
-            <span class="d-none d-sm-inline">Déconnexion</span>
+            <span class="d-none d-sm-inline">Sign Out</span>
         </a>
     </div>
 </header>

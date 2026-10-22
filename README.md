@@ -110,7 +110,7 @@ An enterprise-grade Java Web Application designed for universities to manage stu
 
 ```
 attendance-management-system/
-├── PRESENTATION_PROJET_JURY.md         # Complete slide-by-slide presentation & jury defense guide
+├── PROJECT_PRESENTATION_DEFENSE.md    # Complete slide-by-slide presentation & jury defense guide
 ├── README.md                            # GitHub repository overview
 └── AttendanceSystem/                    # Maven Java Web Project
     ├── pom.xml                          # Maven build configuration & dependencies

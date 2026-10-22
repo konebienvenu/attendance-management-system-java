@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Gestionnaire de connexion Singleton pour MySQL JDBC.
- * Lit la configuration depuis db.properties avec repli automatique sécurisé.
+ * Singleton database connection manager for MySQL JDBC.
+ * Reads configuration from db.properties with secure fallback defaults.
  */
 public class DBConnection {
     private static String url = "jdbc:mysql://localhost:3306/attendance_management_system?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8";
@@ -18,7 +18,6 @@ public class DBConnection {
 
     static {
         try {
-            // Tentative de chargement du fichier db.properties
             Properties props = new Properties();
             try (InputStream input = DBConnection.class.getClassLoader().getResourceAsStream("db.properties")) {
                 if (input != null) {
@@ -29,28 +28,27 @@ public class DBConnection {
                     if (props.getProperty("db.driver") != null) driver = props.getProperty("db.driver");
                 }
             } catch (Exception e) {
-                System.err.println("[DBConnection] db.properties non trouvé, utilisation des paramètres par défaut.");
+                System.err.println("[DBConnection] db.properties not found, using default configuration.");
             }
 
-            // Chargement dynamique de la classe du driver JDBC
             Class.forName(driver);
-            System.out.println("[DBConnection] MySQL Driver chargé avec succès : " + driver);
+            System.out.println("[DBConnection] MySQL JDBC Driver loaded successfully: " + driver);
         } catch (ClassNotFoundException e) {
-            System.err.println("[DBConnection] ERREUR : Driver JDBC non trouvé dans le classpath ! " + e.getMessage());
+            System.err.println("[DBConnection] ERROR: JDBC Driver not found in classpath! " + e.getMessage());
         }
     }
 
     /**
-     * Retourne une nouvelle connexion active vers la base de données.
-     * @return Connection JDBC
-     * @throws SQLException si la connexion échoue
+     * Returns an active database connection.
+     * @return JDBC Connection
+     * @throws SQLException if a database access error occurs
      */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, password);
     }
 
     /**
-     * Ferme proprement des ressources ouvertes (ResultSet, Statement, Connection).
+     * Safely closes open database resources.
      */
     public static void close(AutoCloseable... resources) {
         for (AutoCloseable res : resources) {

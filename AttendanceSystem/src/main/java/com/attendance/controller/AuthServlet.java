@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
- * Contrôleur gérant l'authentification (Connexion / Déconnexion / Routage d'accueil).
+ * Controller handling user authentication (Login, Logout, and Role Routing).
  */
 @WebServlet(urlPatterns = {"/login", "/logout", ""})
 public class AuthServlet extends HttpServlet {
@@ -33,7 +33,7 @@ public class AuthServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
 
-        // Déconnexion
+        // Sign out action
         if ("/logout".equals(path)) {
             HttpSession session = req.getSession(false);
             if (session != null) {
@@ -43,7 +43,7 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
-        // Si l'utilisateur est déjà connecté, redirection vers son dashboard
+        // If user is already authenticated, redirect to appropriate dashboard
         HttpSession session = req.getSession(false);
         if (session != null && session.getAttribute("currentUser") != null) {
             User user = (User) session.getAttribute("currentUser");
@@ -56,7 +56,7 @@ public class AuthServlet extends HttpServlet {
             }
         }
 
-        // Affichage de la page de connexion
+        // Forward to login page
         req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
     }
 
@@ -66,7 +66,7 @@ public class AuthServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
-            req.setAttribute("errorMessage", "Veuillez renseigner votre identifiant et votre mot de passe.");
+            req.setAttribute("errorMessage", "Please provide both username and password.");
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
             return;
         }
@@ -74,14 +74,12 @@ public class AuthServlet extends HttpServlet {
         User user = userDAO.authenticate(username.trim(), password.trim());
 
         if (user != null) {
-            // Création de la session HTTP
             HttpSession session = req.getSession(true);
             session.setAttribute("currentUser", user);
 
             if (user.isAdmin()) {
                 resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
             } else if (user.isTeacher()) {
-                // Chargement des informations complémentaires de l'enseignant
                 Teacher teacher = teacherDAO.getTeacherByUserId(user.getUserId());
                 session.setAttribute("currentTeacher", teacher);
                 resp.sendRedirect(req.getContextPath() + "/teacher/dashboard");
@@ -89,7 +87,7 @@ public class AuthServlet extends HttpServlet {
                 resp.sendRedirect(req.getContextPath() + "/login?error=unknown_role");
             }
         } else {
-            req.setAttribute("errorMessage", "Identifiant ou mot de passe incorrect.");
+            req.setAttribute("errorMessage", "Invalid username or password. Please try again.");
             req.setAttribute("enteredUsername", username);
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
         }

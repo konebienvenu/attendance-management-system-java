@@ -3,7 +3,7 @@ package com.attendance.model;
 import java.io.Serializable;
 
 /**
- * Entité représentant un enseignant.
+ * Entity representing a faculty instructor.
  */
 public class Teacher implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -13,7 +13,7 @@ public class Teacher implements Serializable {
     private String teacherName;
     private String email;
 
-    // Attribut de jointure pratique pour l'affichage
+    // Joined attribute for display convenience
     private String username;
 
     public Teacher() {

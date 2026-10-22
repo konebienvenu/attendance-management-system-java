@@ -3,7 +3,7 @@ package com.attendance.model;
 import java.io.Serializable;
 
 /**
- * DTO utilisé pour afficher la liste des étudiants lors de la saisie des présences.
+ * Data Transfer Object representing a row in the faculty roll call sheet.
  */
 public class AttendanceSheetRowDTO implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -13,7 +13,7 @@ public class AttendanceSheetRowDTO implements Serializable {
     private String enrollmentNo;
     private String studentName;
     private String email;
-    private String currentStatus; // "PRESENT", "ABSENT", ou null (non marqué)
+    private String currentStatus; // "PRESENT", "ABSENT", or null
 
     public AttendanceSheetRowDTO() {
     }

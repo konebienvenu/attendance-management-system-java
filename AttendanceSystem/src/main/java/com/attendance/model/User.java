@@ -3,7 +3,7 @@ package com.attendance.model;
 import java.io.Serializable;
 
 /**
- * Entité représentant un utilisateur du système pour l'authentification.
+ * Entity representing an application user for authentication.
  */
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -11,7 +11,7 @@ public class User implements Serializable {
     private int userId;
     private String username;
     private String password;
-    private String role; // "ADMIN" ou "TEACHER"
+    private String role; // "ADMIN" or "TEACHER"
 
     public User() {
     }

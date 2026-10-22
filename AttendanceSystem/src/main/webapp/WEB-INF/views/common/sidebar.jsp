@@ -9,88 +9,88 @@
 
     <div class="p-3">
         <small class="text-uppercase text-secondary fw-semibold px-3" style="font-size: 0.7rem; letter-spacing: 0.08em;">
-            Menu Principal
+            Main Navigation
         </small>
     </div>
 
     <ul class="nav nav-pills flex-column mb-auto">
-        <!-- Liens Administrateur -->
+        <!-- Administrator Links -->
         <c:if test="${sessionScope.currentUser.admin}">
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/admin/dashboard" 
                    class="nav-link ${param.activeMenu == 'dashboard' ? 'active' : ''}">
                     <i class="fa-solid fa-chart-pie"></i>
-                    Tableau de bord
+                    Dashboard
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/admin/students" 
                    class="nav-link ${param.activeMenu == 'students' ? 'active' : ''}">
                     <i class="fa-solid fa-user-graduate"></i>
-                    Étudiants
+                    Students
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/admin/teachers" 
                    class="nav-link ${param.activeMenu == 'teachers' ? 'active' : ''}">
                     <i class="fa-solid fa-chalkboard-user"></i>
-                    Enseignants
+                    Faculty
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/admin/subjects" 
                    class="nav-link ${param.activeMenu == 'subjects' ? 'active' : ''}">
                     <i class="fa-solid fa-book-bookmark"></i>
-                    Matières
+                    Courses & Subjects
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/admin/enrollments" 
                    class="nav-link ${param.activeMenu == 'enrollments' ? 'active' : ''}">
                     <i class="fa-solid fa-user-check"></i>
-                    Inscriptions (N:M)
+                    Course Enrollments (N:M)
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/admin/reports" 
                    class="nav-link ${param.activeMenu == 'reports' ? 'active' : ''}">
                     <i class="fa-solid fa-file-invoice"></i>
-                    Rapports & 75%
+                    Reports & 75% Rule
                 </a>
             </li>
         </c:if>
 
-        <!-- Liens Enseignant -->
+        <!-- Faculty Links -->
         <c:if test="${sessionScope.currentUser.teacher}">
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/teacher/dashboard" 
                    class="nav-link ${param.activeMenu == 'dashboard' ? 'active' : ''}">
                     <i class="fa-solid fa-house-laptop"></i>
-                    Mon Tableau de bord
+                    Faculty Portal
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/teacher/attendance" 
                    class="nav-link ${param.activeMenu == 'attendance' ? 'active' : ''}">
                     <i class="fa-solid fa-calendar-check"></i>
-                    Prise de Présence
+                    Take Attendance
                 </a>
             </li>
             <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/teacher/reports" 
                    class="nav-link ${param.activeMenu == 'reports' ? 'active' : ''}">
                     <i class="fa-solid fa-chart-column"></i>
-                    Statistiques & Alertes
+                    Analytics & Alerts
                 </a>
             </li>
         </c:if>
     </ul>
 
-    <!-- Footer Sidebar -->
+    <!-- Sidebar Footer -->
     <div class="p-3 border-top border-secondary-subtle">
         <div class="small text-secondary">
             <div><strong>AJT - 01CE0308</strong></div>
-            <div class="text-white-50" style="font-size: 0.75rem;">Projet Entreprise Java EE</div>
+            <div class="text-white-50" style="font-size: 0.75rem;">Enterprise Java EE Project</div>
         </div>
     </div>
 </div>
