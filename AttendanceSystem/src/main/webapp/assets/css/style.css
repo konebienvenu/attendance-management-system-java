@@ -217,7 +217,7 @@ body.sidebar-collapsed .main-wrapper {
 .table-modern {
     background: #ffffff;
     margin-bottom: 0;
-    min-width: 780px; /* Minimum width ensuring all columns remain spaced and readable */
+    min-width: 950px; /* Minimum width ensuring all columns remain spaced and readable */
     width: 100%;
 }
 

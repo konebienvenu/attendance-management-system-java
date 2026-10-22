@@ -76,12 +76,12 @@
                                 <p class="text-muted small mb-0">The university exam eligibility threshold is established at <strong>75%</strong>.</p>
                             </div>
                             <div class="d-flex gap-2 align-items-center">
-                                <div class="btn-group" role="group" title="Scroll Table Left / Right">
-                                    <button type="button" class="btn btn-outline-secondary btn-sm px-2" onclick="scrollTableLeft(this)" title="Scroll Left">
-                                        <i class="fa-solid fa-chevron-left"></i>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Table Horizontal Scroll">
+                                    <button type="button" class="btn btn-outline-primary px-2 fw-semibold" onclick="scrollTableLeft(this)" title="Scroll Table Left">
+                                        <i class="fa-solid fa-arrow-left me-1"></i> Left
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm px-2" onclick="scrollTableRight(this)" title="Scroll Right">
-                                        <i class="fa-solid fa-chevron-right"></i>
+                                    <button type="button" class="btn btn-outline-primary px-2 fw-semibold" onclick="scrollTableRight(this)" title="Scroll Table Right">
+                                        Right <i class="fa-solid fa-arrow-right ms-1"></i>
                                     </button>
                                 </div>
                                 <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
