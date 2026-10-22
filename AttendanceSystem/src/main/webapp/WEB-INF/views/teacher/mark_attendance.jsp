@@ -4,7 +4,7 @@
     <jsp:param name="pageTitle" value="Interactive Attendance Sheet" />
 </jsp:include>
 
-<div class="d-flex min-vh-100">
+<div class="d-flex min-vh-100 app-layout">
     <jsp:include page="/WEB-INF/views/common/sidebar.jsp">
         <jsp:param name="activeMenu" value="attendance" />
     </jsp:include>
@@ -72,7 +72,15 @@
                             </div>
 
                             <!-- Fast Action Helpers -->
-                            <div class="d-flex gap-2">
+                            <div class="d-flex gap-2 align-items-center flex-wrap">
+                                <div class="btn-group" role="group" title="Scroll Table Left / Right">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm px-2" onclick="scrollTableLeft(this)" title="Scroll Left">
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm px-2" onclick="scrollTableRight(this)" title="Scroll Right">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </button>
+                                </div>
                                 <button type="button" class="btn btn-outline-success btn-sm" id="btnMarkAllPresent">
                                     <i class="fa-solid fa-check-double me-1"></i> Mark All Present
                                 </button>
@@ -133,6 +141,11 @@
                                                 </c:forEach>
                                             </tbody>
                                         </table>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center mt-2 px-1 text-muted small">
+                                        <span><i class="fa-solid fa-arrows-left-right text-primary me-1"></i> Use arrow buttons, scroll wheel, or drag to scroll table horizontally</span>
+                                        <span>Total: ${attendanceSheet.size()} enrolled students</span>
                                     </div>
 
                                     <div class="d-flex justify-content-end mt-4 pt-3 border-top">

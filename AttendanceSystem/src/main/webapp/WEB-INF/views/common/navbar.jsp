@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <header class="topbar d-flex justify-content-between align-items-center">
-    <div class="d-flex align-items-center gap-3">
-        <h5 class="mb-0 fw-bold text-dark">
+    <div class="d-flex align-items-center gap-2">
+        <button type="button" class="btn btn-sm btn-light border text-secondary me-1" id="sidebarToggle" title="Toggle Sidebar">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <h5 class="mb-0 fw-bold text-dark text-truncate">
             <i class="fa-solid fa-graduation-cap text-primary me-2"></i>
             ${param.pageHeading != null ? param.pageHeading : "Dashboard"}
         </h5>
-        <span class="badge bg-light text-muted border px-2 py-1">AJT Semester 3</span>
+        <span class="badge bg-light text-muted border px-2 py-1 d-none d-sm-inline">AJT Semester 3</span>
     </div>
 
     <div class="d-flex align-items-center gap-3">

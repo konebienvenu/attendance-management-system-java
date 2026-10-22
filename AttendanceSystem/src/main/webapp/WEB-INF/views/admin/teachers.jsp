@@ -4,7 +4,7 @@
     <jsp:param name="pageTitle" value="Faculty Management" />
 </jsp:include>
 
-<div class="d-flex min-vh-100">
+<div class="d-flex min-vh-100 app-layout">
     <jsp:include page="/WEB-INF/views/common/sidebar.jsp">
         <jsp:param name="activeMenu" value="teachers" />
     </jsp:include>
@@ -46,10 +46,18 @@
                         <h5 class="fw-bold text-dark mb-1">Faculty Directory</h5>
                         <p class="text-muted small mb-0">Total: ${teachers.size()} registered faculty professors</p>
                     </div>
-                    <div class="d-flex gap-2">
-                        <div class="input-group" style="max-width: 280px;">
+                    <div class="d-flex gap-2 align-items-center flex-wrap">
+                        <div class="input-group" style="max-width: 250px;">
                             <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-magnifying-glass"></i></span>
                             <input type="text" class="form-control border-start-0 table-search-input" data-table="teachersTable" placeholder="Search faculty...">
+                        </div>
+                        <div class="btn-group" role="group" title="Scroll Table Left / Right">
+                            <button type="button" class="btn btn-outline-secondary btn-sm px-2" onclick="scrollTableLeft(this)" title="Scroll Left">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm px-2" onclick="scrollTableRight(this)" title="Scroll Right">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
                         </div>
                         <button type="button" class="btn btn-primary text-nowrap" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
                             <i class="fa-solid fa-user-plus me-1"></i> Add Faculty Member
@@ -127,6 +135,11 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-2 px-1 text-muted small">
+                    <span><i class="fa-solid fa-arrows-left-right text-primary me-1"></i> Use arrow buttons, scroll wheel, or drag to scroll table horizontally</span>
+                    <span>Total: ${teachers.size()} faculty members</span>
                 </div>
             </div>
         </main>

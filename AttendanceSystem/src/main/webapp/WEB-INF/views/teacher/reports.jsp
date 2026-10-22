@@ -4,7 +4,7 @@
     <jsp:param name="pageTitle" value="Attendance Analytics & Reports" />
 </jsp:include>
 
-<div class="d-flex min-vh-100">
+<div class="d-flex min-vh-100 app-layout">
     <jsp:include page="/WEB-INF/views/common/sidebar.jsp">
         <jsp:param name="activeMenu" value="reports" />
     </jsp:include>
@@ -75,9 +75,19 @@
                                 <h5 class="fw-bold text-dark mb-1">Student Attendance Breakdown</h5>
                                 <p class="text-muted small mb-0">The university exam eligibility threshold is established at <strong>75%</strong>.</p>
                             </div>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
-                                <i class="fa-solid fa-print me-1"></i> Print / Export PDF
-                            </button>
+                            <div class="d-flex gap-2 align-items-center">
+                                <div class="btn-group" role="group" title="Scroll Table Left / Right">
+                                    <button type="button" class="btn btn-outline-secondary btn-sm px-2" onclick="scrollTableLeft(this)" title="Scroll Left">
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm px-2" onclick="scrollTableRight(this)" title="Scroll Right">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="window.print()">
+                                    <i class="fa-solid fa-print me-1"></i> Print / Export PDF
+                                </button>
+                            </div>
                         </div>
 
                         <div class="table-responsive">
@@ -139,6 +149,11 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mt-2 px-1 text-muted small">
+                            <span><i class="fa-solid fa-arrows-left-right text-primary me-1"></i> Use arrow buttons, scroll wheel, or drag to scroll table horizontally</span>
+                            <span>Total: ${reports.size()} enrolled students analyzed</span>
                         </div>
                     </div>
                 </c:when>

@@ -4,7 +4,7 @@
     <jsp:param name="pageTitle" value="Administrator Dashboard" />
 </jsp:include>
 
-<div class="d-flex min-vh-100">
+<div class="d-flex min-vh-100 app-layout">
     <!-- Sidebar -->
     <jsp:include page="/WEB-INF/views/common/sidebar.jsp">
         <jsp:param name="activeMenu" value="dashboard" />
