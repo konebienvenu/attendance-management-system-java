@@ -5,26 +5,28 @@
 </jsp:include>
 
 <div class="d-flex min-vh-100">
+    <!-- Sidebar -->
     <jsp:include page="/WEB-INF/views/common/sidebar.jsp">
         <jsp:param name="activeMenu" value="dashboard" />
     </jsp:include>
 
-    <div class="flex-grow-1 d-flex flex-column">
+    <!-- Main Content with horizontal scroll safety -->
+    <div class="flex-grow-1 d-flex flex-column main-wrapper">
         <jsp:include page="/WEB-INF/views/common/navbar.jsp">
             <jsp:param name="pageHeading" value="Administrator Dashboard" />
         </jsp:include>
 
-        <main class="p-4 flex-grow-1">
+        <main class="p-3 p-md-4 flex-grow-1">
             <!-- Welcome Banner -->
             <div class="card bg-primary text-white p-4 mb-4 border-0 shadow-sm" 
                  style="background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%) !important;">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
                     <div>
                         <h4 class="fw-bold mb-1">Welcome to the Administration Panel</h4>
                         <p class="mb-0 text-white-50">Centralized management of students, faculty, course curricula, and attendance metrics.</p>
                     </div>
-                    <div class="d-none d-md-block">
-                        <a href="${pageContext.request.contextPath}/admin/students" class="btn btn-light text-primary fw-semibold me-2">
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="${pageContext.request.contextPath}/admin/students" class="btn btn-light text-primary fw-semibold">
                             <i class="fa-solid fa-user-plus me-1"></i> Add Student
                         </a>
                         <a href="${pageContext.request.contextPath}/admin/enrollments" class="btn btn-outline-light">
@@ -109,7 +111,7 @@
                             </h6>
                             <span class="badge bg-light text-muted border">Analytics</span>
                         </div>
-                        <div style="height: 280px;">
+                        <div style="height: 280px; position: relative;">
                             <canvas id="subjectBarChart"></canvas>
                         </div>
                     </div>
@@ -123,7 +125,7 @@
                             </h6>
                             <span class="badge bg-light text-muted border">Logged Sessions</span>
                         </div>
-                        <div style="height: 240px;" class="d-flex justify-content-center">
+                        <div style="height: 240px; position: relative;" class="d-flex justify-content-center">
                             <canvas id="attendanceDoughnutChart"></canvas>
                         </div>
                         <div class="d-flex justify-content-around text-center mt-3 pt-2 border-top">
@@ -144,29 +146,29 @@
             <div class="card p-4">
                 <h6 class="fw-bold mb-3 text-dark">Quick Administrative Actions</h6>
                 <div class="row g-3">
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/students" class="btn btn-outline-primary w-100 py-3 text-start">
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <a href="${pageContext.request.contextPath}/admin/students" class="btn btn-outline-primary w-100 p-3 text-start h-100">
                             <i class="fa-solid fa-user-graduate fs-4 d-block mb-2 text-primary"></i>
                             <div class="fw-semibold">Manage Students</div>
                             <small class="text-muted">Register, edit, or remove student profiles</small>
                         </a>
                     </div>
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/teachers" class="btn btn-outline-info w-100 py-3 text-start">
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <a href="${pageContext.request.contextPath}/admin/teachers" class="btn btn-outline-info w-100 p-3 text-start h-100">
                             <i class="fa-solid fa-chalkboard-user fs-4 d-block mb-2 text-info"></i>
                             <div class="fw-semibold">Manage Faculty</div>
                             <small class="text-muted">Create faculty credentials and user accounts</small>
                         </a>
                     </div>
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/subjects" class="btn btn-outline-success w-100 py-3 text-start">
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <a href="${pageContext.request.contextPath}/admin/subjects" class="btn btn-outline-success w-100 p-3 text-start h-100">
                             <i class="fa-solid fa-book-bookmark fs-4 d-block mb-2 text-success"></i>
                             <div class="fw-semibold">Manage Courses</div>
                             <small class="text-muted">Configure curricula and assign instructors</small>
                         </a>
                     </div>
-                    <div class="col-md-3">
-                        <a href="${pageContext.request.contextPath}/admin/reports" class="btn btn-outline-warning w-100 py-3 text-start">
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <a href="${pageContext.request.contextPath}/admin/reports" class="btn btn-outline-warning w-100 p-3 text-start h-100">
                             <i class="fa-solid fa-triangle-exclamation fs-4 d-block mb-2 text-warning"></i>
                             <div class="fw-semibold">Academic 75% Rule</div>
                             <small class="text-muted">Audit students falling below threshold</small>

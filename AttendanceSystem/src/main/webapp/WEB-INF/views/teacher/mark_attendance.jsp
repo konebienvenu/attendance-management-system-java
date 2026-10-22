@@ -9,12 +9,12 @@
         <jsp:param name="activeMenu" value="attendance" />
     </jsp:include>
 
-    <div class="flex-grow-1 d-flex flex-column">
+    <div class="flex-grow-1 d-flex flex-column main-wrapper">
         <jsp:include page="/WEB-INF/views/common/navbar.jsp">
             <jsp:param name="pageHeading" value="Interactive Attendance Sheet" />
         </jsp:include>
 
-        <main class="p-4 flex-grow-1">
+        <main class="p-3 p-md-4 flex-grow-1">
             <c:if test="${param.msg == 'attendance_saved'}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="fa-solid fa-circle-check me-2"></i>Attendance sheet saved successfully to the database!

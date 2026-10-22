@@ -9,12 +9,12 @@
         <jsp:param name="activeMenu" value="reports" />
     </jsp:include>
 
-    <div class="flex-grow-1 d-flex flex-column">
+    <div class="flex-grow-1 d-flex flex-column main-wrapper">
         <jsp:include page="/WEB-INF/views/common/navbar.jsp">
             <jsp:param name="pageHeading" value="Attendance Analytics & Reports" />
         </jsp:include>
 
-        <main class="p-4 flex-grow-1">
+        <main class="p-3 p-md-4 flex-grow-1">
             <!-- Course Selector -->
             <div class="card p-4 mb-4">
                 <form action="" method="get" class="row g-3 align-items-end">

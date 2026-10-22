@@ -9,12 +9,12 @@
         <jsp:param name="activeMenu" value="enrollments" />
     </jsp:include>
 
-    <div class="flex-grow-1 d-flex flex-column">
+    <div class="flex-grow-1 d-flex flex-column main-wrapper">
         <jsp:include page="/WEB-INF/views/common/navbar.jsp">
             <jsp:param name="pageHeading" value="Course Enrollments (Many-to-Many Relationship)" />
         </jsp:include>
 
-        <main class="p-4 flex-grow-1">
+        <main class="p-3 p-md-4 flex-grow-1">
             <c:if test="${param.msg == 'enrolled'}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="fa-solid fa-circle-check me-2"></i>Student enrolled in course successfully!

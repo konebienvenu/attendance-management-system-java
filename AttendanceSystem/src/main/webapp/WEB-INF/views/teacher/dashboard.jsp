@@ -9,12 +9,12 @@
         <jsp:param name="activeMenu" value="dashboard" />
     </jsp:include>
 
-    <div class="flex-grow-1 d-flex flex-column">
+    <div class="flex-grow-1 d-flex flex-column main-wrapper">
         <jsp:include page="/WEB-INF/views/common/navbar.jsp">
             <jsp:param name="pageHeading" value="Faculty Portal" />
         </jsp:include>
 
-        <main class="p-4 flex-grow-1">
+        <main class="p-3 p-md-4 flex-grow-1">
             <!-- Header Banner -->
             <div class="card bg-dark text-white p-4 mb-4 border-0 shadow-sm"
                  style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;">

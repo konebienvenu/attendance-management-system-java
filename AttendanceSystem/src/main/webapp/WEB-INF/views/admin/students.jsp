@@ -9,12 +9,12 @@
         <jsp:param name="activeMenu" value="students" />
     </jsp:include>
 
-    <div class="flex-grow-1 d-flex flex-column">
+    <div class="flex-grow-1 d-flex flex-column main-wrapper">
         <jsp:include page="/WEB-INF/views/common/navbar.jsp">
             <jsp:param name="pageHeading" value="Student Directory" />
         </jsp:include>
 
-        <main class="p-4 flex-grow-1">
+        <main class="p-3 p-md-4 flex-grow-1">
             <!-- Feedback Alerts -->
             <c:if test="${param.msg == 'added'}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
