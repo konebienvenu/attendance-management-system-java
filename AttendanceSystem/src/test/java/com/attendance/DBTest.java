@@ -22,6 +22,9 @@ public class DBTest {
             User admin = userDAO.authenticate("admin", "admin123");
             System.out.println("2. Admin Authentication: " + (admin != null ? "SUCCESS (" + admin.getUsername() + ")" : "FAILED"));
 
+            User teacher = userDAO.authenticate("kunal.khimani", "teacher123");
+            System.out.println("2b. Teacher Authentication: " + (teacher != null ? "SUCCESS (" + teacher.getUsername() + ", Role: " + teacher.getRole() + ")" : "FAILED"));
+
             // Test StudentDAO
             StudentDAO studentDAO = new StudentDAO();
             List<Student> students = studentDAO.getAllStudents();

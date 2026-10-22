@@ -7,13 +7,13 @@ USE attendance_management_system;
 -- 1. System Users (Passwords: admin123 for admin, teacher123 for teachers)
 -- SHA-256 Hashes:
 -- admin123   -> 240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9
--- teacher123 -> 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+-- teacher123 -> cde383eee8ee7a4400adf7a15f716f179a2eb97646b37e089eb8d6d04e663416
 
 INSERT INTO system_user (user_id, username, password, role) VALUES
 (1, 'admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'ADMIN'),
-(2, 'kunal.khimani', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'TEACHER'),
-(3, 'sweta.khatana', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'TEACHER'),
-(4, 'reshma.sunil', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', 'TEACHER');
+(2, 'kunal.khimani', 'cde383eee8ee7a4400adf7a15f716f179a2eb97646b37e089eb8d6d04e663416', 'TEACHER'),
+(3, 'sweta.khatana', 'cde383eee8ee7a4400adf7a15f716f179a2eb97646b37e089eb8d6d04e663416', 'TEACHER'),
+(4, 'reshma.sunil', 'cde383eee8ee7a4400adf7a15f716f179a2eb97646b37e089eb8d6d04e663416', 'TEACHER');
 
 -- 2. Faculty / Teachers
 INSERT INTO teacher (teacher_id, user_id, teacher_name, email) VALUES
