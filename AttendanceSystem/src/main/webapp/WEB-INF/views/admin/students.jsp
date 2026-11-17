@@ -95,50 +95,12 @@
                                               onsubmit="return confirm('Are you sure you want to delete this student record?');">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="${s.studentId}">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Student">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
-
-                                <!-- Edit Student Modal -->
-                                <div class="modal fade" id="editModal${s.studentId}" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <form action="${pageContext.request.contextPath}/admin/students" method="post">
-                                                <input type="hidden" name="action" value="update">
-                                                <input type="hidden" name="studentId" value="${s.studentId}">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title fw-bold">Edit Student Profile</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Enrollment Number</label>
-                                                        <input type="text" name="enrollmentNo" class="form-control" value="${s.enrollmentNo}" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Full Name</label>
-                                                        <input type="text" name="studentName" class="form-control" value="${s.studentName}" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">University Email</label>
-                                                        <input type="email" name="email" class="form-control" value="${s.email}" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Academic Semester</label>
-                                                        <input type="number" name="semester" class="form-control" value="${s.semester}" min="1" max="8" required>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -152,6 +114,46 @@
         </main>
     </div>
 </div>
+
+<!-- Edit Student Modals (Rendered outside table for valid HTML5 form submission) -->
+<c:forEach var="s" items="${students}">
+    <div class="modal fade" id="editModal${s.studentId}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="${pageContext.request.contextPath}/admin/students" method="post">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="studentId" value="${s.studentId}">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold">Edit Student Profile</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Enrollment Number</label>
+                            <input type="text" name="enrollmentNo" class="form-control" value="<c:out value='${s.enrollmentNo}'/>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Full Name</label>
+                            <input type="text" name="studentName" class="form-control" value="<c:out value='${s.studentName}'/>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">University Email</label>
+                            <input type="email" name="email" class="form-control" value="<c:out value='${s.email}'/>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Academic Semester</label>
+                            <input type="number" name="semester" class="form-control" value="${s.semester}" min="1" max="8" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</c:forEach>
 
 <!-- Add Student Modal -->
 <div class="modal fade" id="addStudentModal" tabindex="-1" aria-hidden="true">

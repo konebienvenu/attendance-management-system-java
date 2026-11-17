@@ -1,7 +1,9 @@
 # 🎓 Academic Project Defense & Technical Presentation
 ## Enterprise Attendance Management System
 **Course Title:** Advanced Java Technologies (AJT - 01CE0308)  
-**Academic Level:** Semester 3 - Computer Engineering  
+**Developed By:** Kone Bienvenu, Avinash, Kabwe — *CSE-CS student Semester 3 at Marwadi University*  
+**Guided By:** Prof. Sweta Kathana  
+**Academic Level:** Semester 3 - Computer Science & Engineering (CSE-CS)  
 **Evaluation Weight:** 40 Marks (End-Semester Project Evaluation)  
 **Technology Stack:** Java EE, Servlets 3.1, JSP 2.3, JSTL 1.2, JDBC, MySQL 8.0, Bootstrap 5.3, Chart.js, Apache Maven, Apache Tomcat  
 

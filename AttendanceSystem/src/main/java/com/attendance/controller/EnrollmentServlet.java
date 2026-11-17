@@ -68,6 +68,24 @@ public class EnrollmentServlet extends HttpServlet {
                     resp.sendRedirect(req.getContextPath() + "/admin/enrollments?error=already_enrolled");
                 }
                 return;
+            } else if ("update".equals(action)) {
+                int enrollmentId = Integer.parseInt(req.getParameter("enrollmentId"));
+                int studentId = Integer.parseInt(req.getParameter("studentId"));
+                int subjectId = Integer.parseInt(req.getParameter("subjectId"));
+                String dateStr = req.getParameter("enrollmentDate");
+                Date enrollmentDate = (dateStr != null && !dateStr.isEmpty())
+                        ? Date.valueOf(dateStr)
+                        : Date.valueOf(LocalDate.now());
+                String status = req.getParameter("status");
+                if (status == null || status.trim().isEmpty()) status = "ACTIVE";
+
+                boolean success = enrollmentDAO.updateEnrollment(enrollmentId, studentId, subjectId, enrollmentDate, status);
+                if (success) {
+                    resp.sendRedirect(req.getContextPath() + "/admin/enrollments?msg=updated");
+                } else {
+                    resp.sendRedirect(req.getContextPath() + "/admin/enrollments?error=already_enrolled");
+                }
+                return;
             } else if ("toggle".equals(action)) {
                 int enrollmentId = Integer.parseInt(req.getParameter("id"));
                 String currentStatus = req.getParameter("status");

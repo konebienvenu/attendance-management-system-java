@@ -49,9 +49,9 @@ public class TeacherServlet extends HttpServlet {
 
         try {
             if ("add".equals(action)) {
-                String name = req.getParameter("teacherName");
-                String email = req.getParameter("email");
-                String username = req.getParameter("username");
+                String name = req.getParameter("teacherName").trim();
+                String email = req.getParameter("email").trim();
+                String username = req.getParameter("username").trim();
                 String password = req.getParameter("password");
 
                 boolean success = teacherDAO.addTeacherWithAccount(name, email, username, password);
@@ -63,21 +63,26 @@ public class TeacherServlet extends HttpServlet {
                 return;
             } else if ("update".equals(action)) {
                 int teacherId = Integer.parseInt(req.getParameter("teacherId"));
-                String name = req.getParameter("teacherName");
-                String email = req.getParameter("email");
+                String name = req.getParameter("teacherName").trim();
+                String email = req.getParameter("email").trim();
+                String username = req.getParameter("username");
+                String password = req.getParameter("password");
 
-                Teacher t = new Teacher();
-                t.setTeacherId(teacherId);
-                t.setTeacherName(name);
-                t.setEmail(email);
-
-                teacherDAO.updateTeacher(t);
-                resp.sendRedirect(req.getContextPath() + "/admin/teachers?msg=updated");
+                boolean success = teacherDAO.updateTeacherWithAccount(teacherId, name, email, username, password);
+                if (success) {
+                    resp.sendRedirect(req.getContextPath() + "/admin/teachers?msg=updated");
+                } else {
+                    resp.sendRedirect(req.getContextPath() + "/admin/teachers?error=duplicate_username");
+                }
                 return;
             } else if ("delete".equals(action)) {
                 int teacherId = Integer.parseInt(req.getParameter("id"));
-                teacherDAO.deleteTeacher(teacherId);
-                resp.sendRedirect(req.getContextPath() + "/admin/teachers?msg=deleted");
+                boolean deleted = teacherDAO.deleteTeacher(teacherId);
+                if (deleted) {
+                    resp.sendRedirect(req.getContextPath() + "/admin/teachers?msg=deleted");
+                } else {
+                    resp.sendRedirect(req.getContextPath() + "/admin/teachers?error=cannot_delete_assigned");
+                }
                 return;
             }
         } catch (Exception e) {

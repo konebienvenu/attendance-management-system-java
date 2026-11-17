@@ -19,15 +19,23 @@ public class UserDAO {
      * Authenticates a user by username and password.
      */
     public User authenticate(String username, String plainPassword) {
-        String sql = "SELECT user_id, username, password, role FROM system_user WHERE username = ?";
+        String sql = "SELECT user_id, username, password, role FROM system_user WHERE username = ? OR username = ?";
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
+
+        String altUsername = username;
+        if ("sweta.kathana".equalsIgnoreCase(username)) {
+            altUsername = "sweta.khatana";
+        } else if ("sweta.khatana".equalsIgnoreCase(username)) {
+            altUsername = "sweta.kathana";
+        }
 
         try {
             conn = DBConnection.getConnection();
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
+            stmt.setString(2, altUsername);
             rs = stmt.executeQuery();
 
             if (rs.next()) {

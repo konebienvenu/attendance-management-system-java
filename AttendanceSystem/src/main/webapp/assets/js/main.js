@@ -19,7 +19,37 @@ window.scrollTableRight = function(btn) {
     }
 };
 
+// Global Password Visibility Toggle Helper
+window.togglePasswordVisibility = function(inputId, iconId) {
+    const pwdInput = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    if (!pwdInput) return;
+    if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        if (icon) {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
+    } else {
+        pwdInput.type = 'password';
+        if (icon) {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+};
+
 document.addEventListener('DOMContentLoaded', function () {
+    // 0. Inject Academic Attribution Footer on Dashboard / Internal Pages
+    const mainWrapper = document.querySelector('.main-wrapper');
+    if (mainWrapper && !mainWrapper.querySelector('.app-footer')) {
+        const footer = document.createElement('footer');
+        footer.className = 'app-footer mt-auto py-3 px-4 bg-white border-top d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 small text-muted';
+        footer.innerHTML = '<div>&copy; 2026 &mdash; Developed by <strong class="text-dark">Kone Bienvenu, Avinash, Kabwe</strong> &bull; <span class="text-primary fw-semibold">CSE-CS student Semester 3 at Marwadi University</span></div>' +
+                           '<div><i class="fa-solid fa-chalkboard-user text-primary me-1"></i>Guided by <strong class="text-dark">Prof. Sweta Kathana</strong> (AJT - 01CE0308)</div>';
+        mainWrapper.appendChild(footer);
+    }
+
     // 1. Sidebar Toggle Button
     const sidebarToggleBtn = document.getElementById('sidebarToggle');
     if (sidebarToggleBtn) {
@@ -43,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
         let scrollLeft;
 
         slider.addEventListener('mousedown', function (e) {
-            // Don't hijack clicks on interactive elements (inputs, buttons, modals, links)
-            if (['INPUT', 'BUTTON', 'A', 'SELECT', 'LABEL', 'I'].includes(e.target.tagName)) return;
+            // Don't hijack clicks on interactive elements (inputs, buttons, modals, links, forms)
+            if (e.target.closest('button, a, input, select, textarea, label, form, .modal')) return;
             isDown = true;
             slider.classList.add('table-dragging');
             startX = e.pageX - slider.offsetLeft;

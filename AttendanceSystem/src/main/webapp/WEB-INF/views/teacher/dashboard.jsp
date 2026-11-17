@@ -20,11 +20,17 @@
                  style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <span class="badge bg-primary mb-2">Active Session</span>
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                            <span class="badge bg-primary">Active Faculty Session</span>
+                            <span class="badge bg-info text-dark fw-semibold">Marwadi University &bull; CSE-CS Semester 3</span>
+                        </div>
                         <h4 class="fw-bold mb-1">
                             Welcome, ${sessionScope.currentTeacher != null ? sessionScope.currentTeacher.teacherName : sessionScope.currentUser.username}!
                         </h4>
-                        <p class="mb-0 text-white-50">Select one of your assigned courses below to take daily attendance or review academic reports.</p>
+                        <p class="mb-1 text-white-50">Select one of your assigned courses below to take daily attendance or review academic reports.</p>
+                        <div class="small text-white-50">
+                            <i class="fa-solid fa-code me-1"></i>Project by <strong class="text-white">Kone Bienvenu, Avinash, Kabwe</strong> &bull; Guided by <strong class="text-info">Prof. Sweta Kathana</strong>
+                        </div>
                     </div>
                     <div class="d-none d-md-block text-end">
                         <div class="small text-white-50">Today's Date:</div>

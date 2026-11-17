@@ -136,6 +136,28 @@ public class EnrollmentDAO {
         }
     }
 
+    public boolean updateEnrollment(int enrollmentId, int studentId, int subjectId, Date enrollmentDate, String status) {
+        String sql = "UPDATE enrollment SET student_id = ?, subject_id = ?, enrollment_date = ?, status = ? WHERE enrollment_id = ?";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+
+        try {
+            conn = DBConnection.getConnection();
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, studentId);
+            stmt.setInt(2, subjectId);
+            stmt.setDate(3, enrollmentDate);
+            stmt.setString(4, status);
+            stmt.setInt(5, enrollmentId);
+            return stmt.executeUpdate() >= 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        } finally {
+            DBConnection.close(stmt, conn);
+        }
+    }
+
     public boolean deleteEnrollment(int enrollmentId) {
         String sql = "DELETE FROM enrollment WHERE enrollment_id = ?";
         Connection conn = null;

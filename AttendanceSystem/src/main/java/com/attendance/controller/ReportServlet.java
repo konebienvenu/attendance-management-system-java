@@ -41,7 +41,7 @@ public class ReportServlet extends HttpServlet {
         User user = (User) session.getAttribute("currentUser");
         Teacher teacher = (Teacher) session.getAttribute("currentTeacher");
 
-        if (teacher == null && user != null && user.isTeacher()) {
+        if (user != null && user.isTeacher()) {
             teacher = teacherDAO.getTeacherByUserId(user.getUserId());
             session.setAttribute("currentTeacher", teacher);
         }
@@ -57,25 +57,31 @@ public class ReportServlet extends HttpServlet {
         req.setAttribute("subjects", subjects);
 
         String subjectIdParam = req.getParameter("subjectId");
+        int subjectIdToLoad = -1;
         if (subjectIdParam != null && !subjectIdParam.trim().isEmpty()) {
             try {
-                int subjectId = Integer.parseInt(subjectIdParam);
-                Subject selectedSubject = subjectDAO.getSubjectById(subjectId);
-                req.setAttribute("selectedSubject", selectedSubject);
-
-                List<StudentReportDTO> reports = attendanceDAO.getStudentReportsBySubject(subjectId);
-                req.setAttribute("reports", reports);
-
-                // Consolidated statistics for this course
-                long warningCount = reports.stream().filter(StudentReportDTO::isWarning).count();
-                double avgPercentage = reports.stream()
-                        .mapToDouble(StudentReportDTO::getPercentage)
-                        .average().orElse(0.0);
-
-                req.setAttribute("warningCount", warningCount);
-                req.setAttribute("avgPercentage", Math.round(avgPercentage * 10.0) / 10.0);
+                subjectIdToLoad = Integer.parseInt(subjectIdParam);
             } catch (NumberFormatException ignored) {
             }
+        } else if (subjects != null && !subjects.isEmpty()) {
+            subjectIdToLoad = subjects.get(0).getSubjectId();
+        }
+
+        if (subjectIdToLoad > 0) {
+            Subject selectedSubject = subjectDAO.getSubjectById(subjectIdToLoad);
+            req.setAttribute("selectedSubject", selectedSubject);
+
+            List<StudentReportDTO> reports = attendanceDAO.getStudentReportsBySubject(subjectIdToLoad);
+            req.setAttribute("reports", reports);
+
+            // Consolidated statistics for this course
+            long warningCount = reports.stream().filter(StudentReportDTO::isWarning).count();
+            double avgPercentage = reports.stream()
+                    .mapToDouble(StudentReportDTO::getPercentage)
+                    .average().orElse(0.0);
+
+            req.setAttribute("warningCount", warningCount);
+            req.setAttribute("avgPercentage", Math.round(avgPercentage * 10.0) / 10.0);
         }
 
         req.getRequestDispatcher("/WEB-INF/views/teacher/reports.jsp").forward(req, resp);

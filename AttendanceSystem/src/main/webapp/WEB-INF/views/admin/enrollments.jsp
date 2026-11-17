@@ -21,6 +21,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             </c:if>
+            <c:if test="${param.msg == 'updated'}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fa-solid fa-circle-check me-2"></i>Enrollment details updated successfully!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </c:if>
             <c:if test="${param.msg == 'status_updated'}">
                 <div class="alert alert-info alert-dismissible fade show" role="alert">
                     <i class="fa-solid fa-rotate me-2"></i>Enrollment status updated.
@@ -100,6 +106,11 @@
                                         </c:choose>
                                     </td>
                                     <td class="text-end">
+                                        <button type="button" class="btn btn-sm btn-outline-primary me-1"
+                                                data-bs-toggle="modal" data-bs-target="#editEnrollmentModal${e.enrollmentId}"
+                                                title="Edit Enrollment">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
                                         <form action="${pageContext.request.contextPath}/admin/enrollments" method="post" class="d-inline">
                                             <input type="hidden" name="action" value="toggle">
                                             <input type="hidden" name="id" value="${e.enrollmentId}">
@@ -112,7 +123,7 @@
                                               onsubmit="return confirm('Confirm student course withdrawal?');">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="${e.enrollmentId}">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Enrollment">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>
                                         </form>
@@ -131,6 +142,61 @@
         </main>
     </div>
 </div>
+
+<!-- Edit Enrollment Modals (Rendered outside table for valid HTML5 form submission) -->
+<c:forEach var="e" items="${enrollments}">
+    <div class="modal fade" id="editEnrollmentModal${e.enrollmentId}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="${pageContext.request.contextPath}/admin/enrollments" method="post">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="enrollmentId" value="${e.enrollmentId}">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold">Edit Course Enrollment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Student</label>
+                            <select name="studentId" class="form-select" required>
+                                <c:forEach var="s" items="${students}">
+                                    <option value="${s.studentId}" ${s.studentId == e.studentId ? 'selected' : ''}>
+                                        [${s.enrollmentNo}] - ${s.studentName}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Course Module</label>
+                            <select name="subjectId" class="form-select" required>
+                                <c:forEach var="sub" items="${subjects}">
+                                    <option value="${sub.subjectId}" ${sub.subjectId == e.subjectId ? 'selected' : ''}>
+                                        [${sub.subjectCode}] - ${sub.subjectName}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Enrollment Date</label>
+                            <input type="date" name="enrollmentDate" class="form-control" value="${e.enrollmentDate}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Enrollment Status</label>
+                            <select name="status" class="form-select" required>
+                                <option value="ACTIVE" ${e.status == 'ACTIVE' ? 'selected' : ''}>ACTIVE</option>
+                                <option value="INACTIVE" ${e.status == 'INACTIVE' ? 'selected' : ''}>INACTIVE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</c:forEach>
 
 <!-- Enroll Student Modal -->
 <div class="modal fade" id="enrollModal" tabindex="-1" aria-hidden="true">

@@ -35,7 +35,13 @@
             </c:if>
             <c:if test="${param.error == 'duplicate_username'}">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <i class="fa-solid fa-triangle-exclamation me-2"></i>Error: This username is already in use. Please select another.
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>Error: This username or email is already in use. Please select another.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            </c:if>
+            <c:if test="${param.error == 'cannot_delete_assigned'}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i>Cannot delete this faculty member because they are currently assigned to active courses. Please reassign their courses first.
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             </c:if>
@@ -96,42 +102,12 @@
                                               onsubmit="return confirm('Are you sure you want to delete this faculty member?');">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="${t.teacherId}">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Faculty">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
-
-                                <!-- Edit Teacher Modal -->
-                                <div class="modal fade" id="editModalTeacher${t.teacherId}" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <form action="${pageContext.request.contextPath}/admin/teachers" method="post">
-                                                <input type="hidden" name="action" value="update">
-                                                <input type="hidden" name="teacherId" value="${t.teacherId}">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title fw-bold">Edit Faculty Details</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Full Name</label>
-                                                        <input type="text" name="teacherName" class="form-control" value="${t.teacherName}" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Email Address</label>
-                                                        <input type="email" name="email" class="form-control" value="${t.email}" required>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -146,6 +122,54 @@
     </div>
 </div>
 
+<!-- Edit Teacher Modals (Rendered outside table for valid HTML5 form submission) -->
+<c:forEach var="t" items="${teachers}">
+    <div class="modal fade" id="editModalTeacher${t.teacherId}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="${pageContext.request.contextPath}/admin/teachers" method="post">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="teacherId" value="${t.teacherId}">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold">Edit Faculty Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Full Name</label>
+                            <input type="text" name="teacherName" class="form-control" value="<c:out value='${t.teacherName}'/>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Email Address</label>
+                            <input type="email" name="email" class="form-control" value="<c:out value='${t.email}'/>" required>
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Account Username</label>
+                            <input type="text" name="username" class="form-control" value="<c:out value='${t.username}'/>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">New Password <span class="text-muted fw-normal">(Leave blank to keep current)</span></label>
+                            <div class="input-group">
+                                <input type="password" name="password" id="editTeacherPwd${t.teacherId}" class="form-control border-end-0" placeholder="Enter new password if changing...">
+                                <button type="button" class="btn btn-light border border-start-0 text-muted"
+                                        onclick="togglePasswordVisibility('editTeacherPwd${t.teacherId}', 'editTeacherPwdIcon${t.teacherId}')"
+                                        title="Show / Hide Password">
+                                    <i class="fa-solid fa-eye" id="editTeacherPwdIcon${t.teacherId}"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</c:forEach>
+
 <!-- Add Teacher Modal -->
 <div class="modal fade" id="addTeacherModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -159,20 +183,27 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">Full Name</label>
-                        <input type="text" name="teacherName" class="form-control" placeholder="e.g. Prof. David Miller" required>
+                        <input type="text" name="teacherName" class="form-control" placeholder="e.g. Prof. Sweta Kathana" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">Email Address</label>
-                        <input type="email" name="email" class="form-control" placeholder="david.miller@university.edu" required>
+                        <input type="email" name="email" class="form-control" placeholder="sweta.kathana@marwadiuniversity.ac.in" required>
                     </div>
                     <hr>
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">Login Username</label>
-                        <input type="text" name="username" class="form-control" placeholder="e.g. david.miller" required>
+                        <input type="text" name="username" class="form-control" placeholder="e.g. sweta.kathana" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">Initial Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                        <div class="input-group">
+                            <input type="password" name="password" id="addTeacherPwd" class="form-control border-end-0" placeholder="••••••••" required>
+                            <button type="button" class="btn btn-light border border-start-0 text-muted"
+                                    onclick="togglePasswordVisibility('addTeacherPwd', 'addTeacherPwdIcon')"
+                                    title="Show / Hide Password">
+                                <i class="fa-solid fa-eye" id="addTeacherPwdIcon"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

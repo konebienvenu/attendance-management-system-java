@@ -46,7 +46,7 @@ public class AttendanceServlet extends HttpServlet {
         User user = (User) session.getAttribute("currentUser");
         Teacher teacher = (Teacher) session.getAttribute("currentTeacher");
 
-        if (teacher == null && user != null) {
+        if (user != null && user.isTeacher()) {
             teacher = teacherDAO.getTeacherByUserId(user.getUserId());
             session.setAttribute("currentTeacher", teacher);
         }
@@ -76,20 +76,26 @@ public class AttendanceServlet extends HttpServlet {
         }
         req.setAttribute("selectedDate", attendanceDate.toString());
 
-        // Selected course module
+        // Selected course module (defaults to first available course for seamless UX)
         String subjectIdParam = req.getParameter("subjectId");
+        int subjectIdToLoad = -1;
         if (subjectIdParam != null && !subjectIdParam.trim().isEmpty()) {
             try {
-                int subjectId = Integer.parseInt(subjectIdParam);
-                req.setAttribute("selectedSubjectId", subjectId);
-                Subject selectedSubject = subjectDAO.getSubjectById(subjectId);
-                req.setAttribute("selectedSubject", selectedSubject);
-
-                // Fetch roll call sheet (enrolled students + recorded statuses)
-                List<AttendanceSheetRowDTO> sheet = attendanceDAO.getAttendanceSheet(subjectId, attendanceDate);
-                req.setAttribute("attendanceSheet", sheet);
+                subjectIdToLoad = Integer.parseInt(subjectIdParam);
             } catch (NumberFormatException ignored) {
             }
+        } else if (subjects != null && !subjects.isEmpty()) {
+            subjectIdToLoad = subjects.get(0).getSubjectId();
+        }
+
+        if (subjectIdToLoad > 0) {
+            req.setAttribute("selectedSubjectId", subjectIdToLoad);
+            Subject selectedSubject = subjectDAO.getSubjectById(subjectIdToLoad);
+            req.setAttribute("selectedSubject", selectedSubject);
+
+            // Fetch roll call sheet (enrolled students + recorded statuses)
+            List<AttendanceSheetRowDTO> sheet = attendanceDAO.getAttendanceSheet(subjectIdToLoad, attendanceDate);
+            req.setAttribute("attendanceSheet", sheet);
         }
 
         req.getRequestDispatcher("/WEB-INF/views/teacher/mark_attendance.jsp").forward(req, resp);
@@ -99,14 +105,17 @@ public class AttendanceServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Teacher teacher = (Teacher) session.getAttribute("currentTeacher");
-        User user = (User) session.getAttribute("currentUser");
+        int subjectId = Integer.parseInt(req.getParameter("subjectId"));
 
         int teacherId = 1;
         if (teacher != null) {
             teacherId = teacher.getTeacherId();
+        } else {
+            Subject subj = subjectDAO.getSubjectById(subjectId);
+            if (subj != null && subj.getTeacherId() > 0) {
+                teacherId = subj.getTeacherId();
+            }
         }
-
-        int subjectId = Integer.parseInt(req.getParameter("subjectId"));
         String dateParam = req.getParameter("attendanceDate");
         Date attendanceDate = Date.valueOf(dateParam);
 

@@ -52,6 +52,13 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="${pageContext.request.contextPath}/teacher/attendance" 
+                   class="nav-link ${param.activeMenu == 'attendance' ? 'active' : ''}">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    Take Attendance
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="${pageContext.request.contextPath}/admin/reports" 
                    class="nav-link ${param.activeMenu == 'reports' ? 'active' : ''}">
                     <i class="fa-solid fa-file-invoice"></i>
@@ -89,8 +96,15 @@
     <!-- Sidebar Footer -->
     <div class="p-3 border-top border-secondary-subtle">
         <div class="small text-secondary">
-            <div><strong>AJT - 01CE0308</strong></div>
-            <div class="text-white-50" style="font-size: 0.75rem;">Enterprise Java EE Project</div>
+            <div class="text-white fw-semibold mb-1"><i class="fa-solid fa-building-columns text-info me-1"></i>Marwadi University</div>
+            <div class="text-info fw-semibold" style="font-size: 0.75rem;">
+                <i class="fa-solid fa-chalkboard-user me-1"></i>Mentor: Prof. Sweta Kathana
+            </div>
+            <div class="text-white-50 mt-2 pt-2 border-top border-secondary-subtle" style="font-size: 0.72rem; line-height: 1.4;">
+                <span class="text-uppercase text-secondary fw-bold" style="font-size: 0.65rem;">Developed By:</span><br>
+                <strong class="text-light">Kone Bienvenu, Avinash, Kabwe</strong><br>
+                CSE-CS student Semester 3
+            </div>
         </div>
     </div>
 </div>

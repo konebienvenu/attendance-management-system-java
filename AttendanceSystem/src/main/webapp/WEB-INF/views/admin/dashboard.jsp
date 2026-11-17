@@ -22,10 +22,24 @@
                  style="background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%) !important;">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
                     <div>
+                        <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                            <span class="badge bg-white text-primary fw-bold px-2 py-1">
+                                <i class="fa-solid fa-building-columns me-1"></i>Marwadi University &bull; CSE-CS Semester 3
+                            </span>
+                            <span class="badge bg-warning text-dark fw-bold px-2 py-1">
+                                <i class="fa-solid fa-chalkboard-user me-1"></i>Guided by Prof. Sweta Kathana
+                            </span>
+                        </div>
                         <h4 class="fw-bold mb-1">Welcome to the Administration Panel</h4>
-                        <p class="mb-0 text-white-50">Centralized management of students, faculty, course curricula, and attendance metrics.</p>
+                        <p class="mb-1 text-white-50">Centralized management of students, faculty, course curricula, and attendance metrics.</p>
+                        <div class="small text-white-50">
+                            <i class="fa-solid fa-users-gear me-1"></i>Developed by <strong class="text-white">Kone Bienvenu, Avinash, Kabwe</strong> (AJT - 01CE0308)
+                        </div>
                     </div>
                     <div class="d-flex gap-2 flex-wrap">
+                        <a href="${pageContext.request.contextPath}/teacher/attendance" class="btn btn-warning text-dark fw-semibold">
+                            <i class="fa-solid fa-calendar-check me-1"></i> Take Attendance
+                        </a>
                         <a href="${pageContext.request.contextPath}/admin/students" class="btn btn-light text-primary fw-semibold">
                             <i class="fa-solid fa-user-plus me-1"></i> Add Student
                         </a>
@@ -39,65 +53,73 @@
             <!-- KPI Metric Cards Row -->
             <div class="row g-3 mb-4">
                 <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="card p-3 stat-card h-100" style="border-left-color: #4f46e5;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="text-muted small fw-semibold text-uppercase">Total Students</div>
-                                <h3 class="fw-bold my-1">${stats.totalStudents}</h3>
-                                <div class="small text-success"><i class="fa-solid fa-user-check me-1"></i>Enrolled this semester</div>
-                            </div>
-                            <div class="stat-icon bg-primary-subtle text-primary">
-                                <i class="fa-solid fa-user-graduate"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="card p-3 stat-card h-100" style="border-left-color: #0ea5e9;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="text-muted small fw-semibold text-uppercase">Faculty Members</div>
-                                <h3 class="fw-bold my-1">${stats.totalTeachers}</h3>
-                                <div class="small text-info"><i class="fa-solid fa-chalkboard me-1"></i>Active professors</div>
-                            </div>
-                            <div class="stat-icon bg-info-subtle text-info">
-                                <i class="fa-solid fa-chalkboard-user"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="card p-3 stat-card h-100" style="border-left-color: #10b981;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="text-muted small fw-semibold text-uppercase">Active Courses</div>
-                                <h3 class="fw-bold my-1">${stats.totalSubjects}</h3>
-                                <div class="small text-success"><i class="fa-solid fa-book-open me-1"></i>Curriculum modules</div>
-                            </div>
-                            <div class="stat-icon bg-success-subtle text-success">
-                                <i class="fa-solid fa-book-bookmark"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <div class="card p-3 stat-card h-100" style="border-left-color: #f59e0b;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="text-muted small fw-semibold text-uppercase">Overall Attendance</div>
-                                <h3 class="fw-bold my-1">${stats.overallAttendanceRate}%</h3>
-                                <div class="small text-warning">
-                                    <i class="fa-solid fa-chart-line me-1"></i>Institutional average
+                    <a href="${pageContext.request.contextPath}/admin/students" class="text-decoration-none">
+                        <div class="card p-3 stat-card h-100" style="border-left-color: #4f46e5;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="text-muted small fw-semibold text-uppercase">Total Students</div>
+                                    <h3 class="fw-bold my-1 text-dark">${stats.totalStudents}</h3>
+                                    <div class="small text-success"><i class="fa-solid fa-user-check me-1"></i>Enrolled this semester</div>
+                                </div>
+                                <div class="stat-icon bg-primary-subtle text-primary">
+                                    <i class="fa-solid fa-user-graduate"></i>
                                 </div>
                             </div>
-                            <div class="stat-icon bg-warning-subtle text-warning">
-                                <i class="fa-solid fa-percent"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <a href="${pageContext.request.contextPath}/admin/teachers" class="text-decoration-none">
+                        <div class="card p-3 stat-card h-100" style="border-left-color: #0ea5e9;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="text-muted small fw-semibold text-uppercase">Faculty Members</div>
+                                    <h3 class="fw-bold my-1 text-dark">${stats.totalTeachers}</h3>
+                                    <div class="small text-info"><i class="fa-solid fa-chalkboard me-1"></i>Active professors</div>
+                                </div>
+                                <div class="stat-icon bg-info-subtle text-info">
+                                    <i class="fa-solid fa-chalkboard-user"></i>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
+
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <a href="${pageContext.request.contextPath}/admin/subjects" class="text-decoration-none">
+                        <div class="card p-3 stat-card h-100" style="border-left-color: #10b981;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="text-muted small fw-semibold text-uppercase">Active Courses</div>
+                                    <h3 class="fw-bold my-1 text-dark">${stats.totalSubjects}</h3>
+                                    <div class="small text-success"><i class="fa-solid fa-book-open me-1"></i>Curriculum modules</div>
+                                </div>
+                                <div class="stat-icon bg-success-subtle text-success">
+                                    <i class="fa-solid fa-book-bookmark"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-12 col-sm-6 col-xl-3">
+                    <a href="${pageContext.request.contextPath}/admin/reports" class="text-decoration-none">
+                        <div class="card p-3 stat-card h-100" style="border-left-color: #f59e0b;">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="text-muted small fw-semibold text-uppercase">Overall Attendance</div>
+                                    <h3 class="fw-bold my-1 text-dark">${stats.overallAttendanceRate}%</h3>
+                                    <div class="small text-warning">
+                                        <i class="fa-solid fa-chart-line me-1"></i>Institutional average
+                                    </div>
+                                </div>
+                                <div class="stat-icon bg-warning-subtle text-warning">
+                                    <i class="fa-solid fa-percent"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
 

@@ -95,52 +95,12 @@
                                               onsubmit="return confirm('Are you sure you want to delete this course?');">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="id" value="${sub.subjectId}">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Course">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>
                                         </form>
                                     </td>
                                 </tr>
-
-                                <!-- Edit Subject Modal -->
-                                <div class="modal fade" id="editSubjectModal${sub.subjectId}" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <form action="${pageContext.request.contextPath}/admin/subjects" method="post">
-                                                <input type="hidden" name="action" value="update">
-                                                <input type="hidden" name="subjectId" value="${sub.subjectId}">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title fw-bold">Edit Course Details</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Course Code</label>
-                                                        <input type="text" name="subjectCode" class="form-control" value="${sub.subjectCode}" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Course Title</label>
-                                                        <input type="text" name="subjectName" class="form-control" value="${sub.subjectName}" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-semibold small">Assigned Faculty Member</label>
-                                                        <select name="teacherId" class="form-select" required>
-                                                            <c:forEach var="t" items="${teachers}">
-                                                                <option value="${t.teacherId}" ${t.teacherId == sub.teacherId ? 'selected' : ''}>
-                                                                    ${t.teacherName}
-                                                                </option>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -154,6 +114,48 @@
         </main>
     </div>
 </div>
+
+<!-- Edit Subject Modals (Rendered outside table for valid HTML5 form submission) -->
+<c:forEach var="sub" items="${subjects}">
+    <div class="modal fade" id="editSubjectModal${sub.subjectId}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="${pageContext.request.contextPath}/admin/subjects" method="post">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="subjectId" value="${sub.subjectId}">
+                    <div class="modal-header">
+                        <h5 class="modal-title fw-bold">Edit Course Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Course Code</label>
+                            <input type="text" name="subjectCode" class="form-control" value="<c:out value='${sub.subjectCode}'/>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Course Title</label>
+                            <input type="text" name="subjectName" class="form-control" value="<c:out value='${sub.subjectName}'/>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Assigned Faculty Member</label>
+                            <select name="teacherId" class="form-select" required>
+                                <c:forEach var="t" items="${teachers}">
+                                    <option value="${t.teacherId}" ${t.teacherId == sub.teacherId ? 'selected' : ''}>
+                                        ${t.teacherName}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</c:forEach>
 
 <!-- Add Subject Modal -->
 <div class="modal fade" id="addSubjectModal" tabindex="-1" aria-hidden="true">

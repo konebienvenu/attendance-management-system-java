@@ -9,7 +9,10 @@
             <i class="fa-solid fa-graduation-cap text-primary me-2"></i>
             ${param.pageHeading != null ? param.pageHeading : "Dashboard"}
         </h5>
-        <span class="badge bg-light text-muted border px-2 py-1 d-none d-sm-inline">AJT Semester 3</span>
+        <span class="badge bg-light text-muted border px-2 py-1 d-none d-sm-inline">AJT Semester 3 &bull; Marwadi University</span>
+        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 d-none d-xl-inline">
+            <i class="fa-solid fa-award me-1"></i>Mentor: Prof. Sweta Kathana
+        </span>
     </div>
 
     <div class="d-flex align-items-center gap-3">

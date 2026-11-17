@@ -37,7 +37,7 @@ public class TeacherDashboardServlet extends HttpServlet {
         User user = (User) session.getAttribute("currentUser");
         Teacher teacher = (Teacher) session.getAttribute("currentTeacher");
 
-        if (teacher == null && user != null) {
+        if (user != null) {
             teacher = teacherDAO.getTeacherByUserId(user.getUserId());
             session.setAttribute("currentTeacher", teacher);
         }

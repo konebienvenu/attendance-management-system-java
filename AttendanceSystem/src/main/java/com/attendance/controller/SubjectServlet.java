@@ -56,8 +56,8 @@ public class SubjectServlet extends HttpServlet {
 
         try {
             if ("add".equals(action)) {
-                String code = req.getParameter("subjectCode");
-                String name = req.getParameter("subjectName");
+                String code = req.getParameter("subjectCode").trim();
+                String name = req.getParameter("subjectName").trim();
                 int teacherId = Integer.parseInt(req.getParameter("teacherId"));
 
                 Subject subject = new Subject(code, name, teacherId);
@@ -70,13 +70,17 @@ public class SubjectServlet extends HttpServlet {
                 return;
             } else if ("update".equals(action)) {
                 int subjectId = Integer.parseInt(req.getParameter("subjectId"));
-                String code = req.getParameter("subjectCode");
-                String name = req.getParameter("subjectName");
+                String code = req.getParameter("subjectCode").trim();
+                String name = req.getParameter("subjectName").trim();
                 int teacherId = Integer.parseInt(req.getParameter("teacherId"));
 
                 Subject subject = new Subject(subjectId, code, name, teacherId);
-                subjectDAO.updateSubject(subject);
-                resp.sendRedirect(req.getContextPath() + "/admin/subjects?msg=updated");
+                boolean success = subjectDAO.updateSubject(subject);
+                if (success) {
+                    resp.sendRedirect(req.getContextPath() + "/admin/subjects?msg=updated");
+                } else {
+                    resp.sendRedirect(req.getContextPath() + "/admin/subjects?error=duplicate_code");
+                }
                 return;
             } else if ("delete".equals(action)) {
                 int subjectId = Integer.parseInt(req.getParameter("id"));

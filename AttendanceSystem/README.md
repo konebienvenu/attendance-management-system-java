@@ -1,5 +1,7 @@
 # 📚 Enterprise Attendance Management System
-> **AJT Project (01CE0308) - Semester 3 - Computer Engineering**  
+> **AJT Project (01CE0308) - Semester 3 - CSE-CS at Marwadi University**  
+> **Developed by:** Kone Bienvenu, Avinash, Kabwe — *CSE-CS student Semester 3 at Marwadi University*  
+> **Guided by:** Prof. Sweta Kathana  
 > Developed using Java Enterprise Technologies (Servlets, JSP, JSTL/EL, JDBC, MySQL, Bootstrap 5.3, Chart.js)
 
 ---
@@ -57,8 +59,8 @@ The database `attendance_management_system` consists of 6 interconnected tables:
 | Role | Username | Password | Permissions |
 | :--- | :--- | :--- | :--- |
 | **Admin** | `admin` | `admin123` | Full access: CRUD Students, Teachers, Subjects, Enrollments, System Analytics |
-| **Faculty 1** | `kunal.khimani` | `teacher123` | Mark daily attendance, Attendance Sheets, 75% Rule Reports |
-| **Faculty 2** | `sweta.khatana` | `teacher123` | Mark daily attendance, Attendance Sheets, 75% Rule Reports |
+| **Faculty 1** | `sweta.kathana` | `teacher123` | Mark daily attendance, Attendance Sheets, 75% Rule Reports |
+| **Faculty 2** | `kunal.khimani` | `teacher123` | Mark daily attendance, Attendance Sheets, 75% Rule Reports |
 
 ---
 

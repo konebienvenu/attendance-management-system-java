@@ -41,7 +41,17 @@ public class AuthenticationFilter implements Filter {
         boolean isStatic = uri.startsWith("/assets/") || uri.endsWith(".css") || uri.endsWith(".js") || uri.endsWith(".png") || uri.endsWith(".jpg");
         boolean isPublic = uri.equals("/login") || uri.equals("/") || uri.equals("/logout") || uri.equals("/index.jsp");
 
-        if (isStatic || isPublic) {
+        if (isStatic) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Prevent browser caching of dynamic pages so edits are immediately reflected
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.setHeader("Pragma", "no-cache");
+        res.setDateHeader("Expires", 0);
+
+        if (isPublic) {
             chain.doFilter(request, response);
             return;
         }

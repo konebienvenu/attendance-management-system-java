@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <name>Attendance Management System</name>
-    <description>Enterprise Attendance Management Web Application - AJT Project</description>
+    <description>Enterprise Attendance Management Web Application - Developed by Kone Bienvenu, Avinash, Kabwe (CSE-CS student Semester 3 at Marwadi University) under the guidance of Prof. Sweta Kathana</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

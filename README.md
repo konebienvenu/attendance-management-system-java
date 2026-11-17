@@ -9,6 +9,8 @@
 An enterprise-grade Java Web Application designed for universities to manage students, faculty, course enrollments, and daily attendance tracking. Features real-time visual analytics, role-based access control (RBAC), and automated enforcement of the **academic 75% minimum attendance rule**.
 
 > **Course Reference :** AJT - Advanced Java Technologies (`01CE0308`)  
+> **Developed By :** **Kone Bienvenu, Avinash, Kabwe** — *CSE-CS student Semester 3 at Marwadi University*  
+> **Course Mentor :** **Prof. Sweta Kathana**  
 > **Evaluation :** Semester 3 Project (40 Marks)
 
 ---
@@ -101,8 +103,8 @@ An enterprise-grade Java Web Application designed for universities to manage stu
 | Role | Username | Password | Features Accessible |
 | :--- | :--- | :--- | :--- |
 | **Admin** | `admin` | `admin123` | Complete administrative control, CRUD, system metrics, enrollment management |
-| **Teacher (AJT)** | `kunal.khimani` | `teacher123` | AJT module attendance sheet, "Mark All Present", 75% rule reports |
-| **Teacher (DBMS)** | `sweta.khatana` | `teacher123` | DBMS module attendance sheet, "Mark All Present", 75% rule reports |
+| **Teacher (AJT & DBMS)** | `sweta.kathana` | `teacher123` | AJT & DBMS attendance sheet, "Mark All Present", 75% rule reports |
+| **Teacher (OS)** | `kunal.khimani` | `teacher123` | OS module attendance sheet, "Mark All Present", 75% rule reports |
 
 ---
 
@@ -134,4 +136,4 @@ attendance-management-system/
 ---
 
 ## 📄 License & Attribution
-Developed for the **Advanced Java Technologies (AJT - 01CE0308)** university course evaluation.
+© 2026 — Developed by **Kone Bienvenu, Avinash, Kabwe** (*CSE-CS student Semester 3 at Marwadi University*) under the guidance of **Prof. Sweta Kathana** for the **Advanced Java Technologies (AJT - 01CE0308)** course evaluation.

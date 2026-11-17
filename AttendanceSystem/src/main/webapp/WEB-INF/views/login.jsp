@@ -12,8 +12,12 @@
             <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-4 p-3 shadow-lg mb-3">
                 <i class="fa-solid fa-clipboard-user fs-2"></i>
             </div>
-            <h3 class="fw-bold text-dark">Attendance Management</h3>
-            <p class="text-muted small">Enterprise Java EE Application (AJT - 01CE0308)</p>
+            <h3 class="fw-bold text-dark mb-1">Attendance Management</h3>
+            <p class="text-muted small mb-2">Enterprise Java EE Application (AJT - 01CE0308)</p>
+            <div class="d-inline-flex align-items-center gap-2 bg-white border rounded-pill px-3 py-1 shadow-sm small">
+                <i class="fa-solid fa-award text-primary"></i>
+                <span class="text-secondary">Guided by <strong class="text-dark">Prof. Sweta Kathana</strong> &bull; <span class="text-primary fw-semibold">Marwadi University</span></span>
+            </div>
         </div>
 
         <div class="card login-card p-4 p-md-5">
@@ -60,8 +64,13 @@
                     <label class="form-label fw-semibold small text-secondary">Password</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-lock"></i></span>
-                        <input type="password" name="password" id="inputPassword" class="form-control border-start-0" 
+                        <input type="password" name="password" id="inputPassword" class="form-control border-start-0 border-end-0" 
                                placeholder="••••••••" required>
+                        <button type="button" class="btn btn-light border border-start-0 text-muted px-3" 
+                                onclick="togglePasswordVisibility('inputPassword', 'togglePasswordIcon')" 
+                                title="Show / Hide Password" aria-label="Show or Hide Password">
+                            <i class="fa-solid fa-eye" id="togglePasswordIcon"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -73,21 +82,31 @@
             <!-- Quick Demo Helper for Jury Defense -->
             <div class="mt-4 pt-3 border-top">
                 <div class="small fw-semibold text-muted mb-2 text-center">Quick Demo Credentials:</div>
-                <div class="d-flex justify-content-center gap-2">
+                <div class="d-flex justify-content-center gap-2 flex-wrap">
                     <button type="button" class="btn btn-sm btn-outline-primary" 
                             onclick="fillDemo('admin', 'admin123')">
                         <i class="fa-solid fa-shield-halved me-1"></i> Admin
                     </button>
+                    <button type="button" class="btn btn-sm btn-outline-success fw-semibold" 
+                            onclick="fillDemo('sweta.kathana', 'teacher123')">
+                        <i class="fa-solid fa-chalkboard-user me-1"></i> Prof. Sweta Kathana
+                    </button>
                     <button type="button" class="btn btn-sm btn-outline-secondary" 
                             onclick="fillDemo('kunal.khimani', 'teacher123')">
-                        <i class="fa-solid fa-chalkboard-user me-1"></i> Faculty
+                        <i class="fa-solid fa-user-tie me-1"></i> Prof. Kunal Khimani
                     </button>
                 </div>
             </div>
         </div>
 
         <div class="text-center mt-4 text-muted small">
-            &copy; 2026 - Developed for AJT Academic Evaluation
+            <div class="fw-semibold text-dark">
+                &copy; 2026 - Kone Bienvenu, Avinash, Kabwe
+            </div>
+            <div>CSE-CS student Semester 3 at <strong>Marwadi University</strong></div>
+            <div class="mt-1 text-secondary" style="font-size: 0.78rem;">
+                Guided by <strong>Prof. Sweta Kathana</strong> &bull; AJT (01CE0308)
+            </div>
         </div>
     </div>
 </div>
@@ -96,6 +115,25 @@
 function fillDemo(username, password) {
     document.getElementById('inputUsername').value = username;
     document.getElementById('inputPassword').value = password;
+}
+
+function togglePasswordVisibility(inputId, iconId) {
+    const pwdInput = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+    if (!pwdInput) return;
+    if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        if (icon) {
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
+    } else {
+        pwdInput.type = 'password';
+        if (icon) {
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
 }
 </script>
 

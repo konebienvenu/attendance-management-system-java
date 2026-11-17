@@ -49,9 +49,9 @@ public class StudentServlet extends HttpServlet {
 
         try {
             if ("add".equals(action)) {
-                String enrollmentNo = req.getParameter("enrollmentNo");
-                String name = req.getParameter("studentName");
-                String email = req.getParameter("email");
+                String enrollmentNo = req.getParameter("enrollmentNo").trim();
+                String name = req.getParameter("studentName").trim();
+                String email = req.getParameter("email").trim();
                 int semester = Integer.parseInt(req.getParameter("semester"));
 
                 Student student = new Student(enrollmentNo, name, email, semester);
@@ -64,14 +64,18 @@ public class StudentServlet extends HttpServlet {
                 return;
             } else if ("update".equals(action)) {
                 int studentId = Integer.parseInt(req.getParameter("studentId"));
-                String enrollmentNo = req.getParameter("enrollmentNo");
-                String name = req.getParameter("studentName");
-                String email = req.getParameter("email");
+                String enrollmentNo = req.getParameter("enrollmentNo").trim();
+                String name = req.getParameter("studentName").trim();
+                String email = req.getParameter("email").trim();
                 int semester = Integer.parseInt(req.getParameter("semester"));
 
                 Student student = new Student(studentId, enrollmentNo, name, email, semester);
-                studentDAO.updateStudent(student);
-                resp.sendRedirect(req.getContextPath() + "/admin/students?msg=updated");
+                boolean success = studentDAO.updateStudent(student);
+                if (success) {
+                    resp.sendRedirect(req.getContextPath() + "/admin/students?msg=updated");
+                } else {
+                    resp.sendRedirect(req.getContextPath() + "/admin/students?error=duplicate_enrollment");
+                }
                 return;
             } else if ("delete".equals(action)) {
                 int studentId = Integer.parseInt(req.getParameter("id"));

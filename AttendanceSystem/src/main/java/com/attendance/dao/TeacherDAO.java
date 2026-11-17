@@ -163,22 +163,55 @@ public class TeacherDAO {
     }
 
     public boolean updateTeacher(Teacher teacher) {
-        String sql = "UPDATE teacher SET teacher_name = ?, email = ? WHERE teacher_id = ?";
+        return updateTeacherWithAccount(teacher.getTeacherId(), teacher.getTeacherName(), teacher.getEmail(), teacher.getUsername(), null);
+    }
+
+    public boolean updateTeacherWithAccount(int teacherId, String teacherName, String email, String username, String newPassword) {
+        Teacher existing = getTeacherById(teacherId);
+        if (existing == null) return false;
+
+        String updateTeacherSql = "UPDATE teacher SET teacher_name = ?, email = ? WHERE teacher_id = ?";
         Connection conn = null;
-        PreparedStatement stmt = null;
+        PreparedStatement teacherStmt = null;
+        PreparedStatement userStmt = null;
 
         try {
             conn = DBConnection.getConnection();
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, teacher.getTeacherName());
-            stmt.setString(2, teacher.getEmail());
-            stmt.setInt(3, teacher.getTeacherId());
-            return stmt.executeUpdate() > 0;
+            conn.setAutoCommit(false);
+
+            teacherStmt = conn.prepareStatement(updateTeacherSql);
+            teacherStmt.setString(1, teacherName);
+            teacherStmt.setString(2, email);
+            teacherStmt.setInt(3, teacherId);
+            teacherStmt.executeUpdate();
+
+            if (username != null && !username.trim().isEmpty()) {
+                if (newPassword != null && !newPassword.trim().isEmpty()) {
+                    String updateUserSql = "UPDATE system_user SET username = ?, password = ? WHERE user_id = ?";
+                    userStmt = conn.prepareStatement(updateUserSql);
+                    userStmt.setString(1, username.trim());
+                    userStmt.setString(2, PasswordUtil.hashPassword(newPassword.trim()));
+                    userStmt.setInt(3, existing.getUserId());
+                    userStmt.executeUpdate();
+                } else {
+                    String updateUserSql = "UPDATE system_user SET username = ? WHERE user_id = ?";
+                    userStmt = conn.prepareStatement(updateUserSql);
+                    userStmt.setString(1, username.trim());
+                    userStmt.setInt(2, existing.getUserId());
+                    userStmt.executeUpdate();
+                }
+            }
+
+            conn.commit();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            if (conn != null) {
+                try { conn.rollback(); } catch (SQLException ignored) {}
+            }
             return false;
         } finally {
-            DBConnection.close(stmt, conn);
+            DBConnection.close(userStmt, teacherStmt, conn);
         }
     }
 
